@@ -108,7 +108,7 @@ implemented; its setup, contracts and limits are documented separately.
 
 ## Maven migration
 
-All artifacts below use group `com.nablatensor` and version `0.2.0` (GitHub release; Maven Central remains at `0.1.0`).
+All artifacts below use group `com.nablatensor` and version `0.2.0` (GitHub and Maven Central).
 
 | Previous artifacts | Destination |
 | --- | --- |

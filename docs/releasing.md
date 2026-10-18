@@ -178,3 +178,18 @@ The publication tooling and NablaTensor migration coordinates are maintained in
 [quant's release guide](https://github.com/nablatensor-dev/quant/blob/main/docs/releasing.md).
 Central credentials remain in the local Maven `central` server entry. Never
 commit credentials or overwrite an already-published Central version.
+
+
+### JAX4J 0.2.0
+
+Version 0.2.0 is published to Central as the parent POM and six library modules
+(core, CUDA, ROCm, Vulkan, wgpu and SIMD). Examples remain GitHub-only. Binary
+JARs match the v0.2.0 GitHub assets byte for byte. Sources and Javadoc were
+generated from the unchanged v0.2.0 tag in an isolated publication tree, with
+the same supplementary developer/SCM metadata and module names used for 0.1.0.
+The release tag remains at `c388f77e74e0cb900640e51d2641000cf8714fae`.
+
+Central deployment: `53d6d608-6c4e-4a2e-abda-1dac2b8d51c3`. The signed bundle
+SHA-256 is `ca1582deac2e74f92399ff25477baea484da7943fda173d79d0c39561dae7847`.
+Hardware validation passed 23 CUDA, 31 Vulkan and 36 wgpu checks. ROCm and SIMD
+execution remain unverified.

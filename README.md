@@ -12,32 +12,31 @@ Release maintainers: see [the release guide](docs/releasing.md).
 [JAX4J 0.2.0](https://github.com/nablatensor-dev/jax4j/releases/tag/v0.2.0)
 provides seven module JARs and SHA-256 checksums. Build/install from the tag with
 `mvn -Pcuda,rocm,examples,simd install`. CUDA tensor and scalar replay validation
-is described below. Version 0.2.0 is a GitHub release; Maven Central currently
-contains 0.1.0.
+is described below. Version 0.2.0 is also published to Maven Central.
 
 ## Maven Central
 
-JAX4J 0.1.0 is published under `com.nablatensor` on
-[Maven Central](https://central.sonatype.com/artifact/com.nablatensor/jax4j-core/0.1.0).
+JAX4J 0.2.0 is published under `com.nablatensor` on
+[Maven Central](https://central.sonatype.com/artifact/com.nablatensor/jax4j-core/0.2.0).
 
 ```xml
 <dependency>
   <groupId>com.nablatensor</groupId>
   <artifactId>jax4j-core</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
 </dependency>
 <dependency>
   <groupId>com.nablatensor</groupId>
   <artifactId>jax4j-engine-vulkan</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <scope>runtime</scope>
 </dependency>
 ```
 
 Use `jax4j-engine-wgpu` for wgpu-native. The parent artifact `jax4j` is a POM.
-CUDA, ROCm and SIMD artifacts are also available; this publication validated
-only Vulkan and wgpu. The Maven Central binary JARs match the GitHub v0.1.0
-release assets byte for byte. Finance APIs are maintained separately in
+CUDA, ROCm and SIMD artifacts are also available. Version 0.2.0 validated CUDA,
+Vulkan and wgpu hardware; ROCm and SIMD execution remain unverified. The Maven
+Central binary JARs match the GitHub v0.2.0 release assets byte for byte. Finance APIs are maintained separately in
 [NablaTensor Quant](https://github.com/nablatensor-dev/quant).
 
 ## Build and validate
