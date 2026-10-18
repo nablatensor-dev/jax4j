@@ -7,6 +7,31 @@ NablaTensor or TensorJIT JARs.
 
 Release maintainers: see [the release guide](docs/releasing.md).
 
+## Maven Central
+
+JAX4J 0.1.0 is published under `com.nablatensor` on
+[Maven Central](https://central.sonatype.com/artifact/com.nablatensor/jax4j-core/0.1.0).
+
+```xml
+<dependency>
+  <groupId>com.nablatensor</groupId>
+  <artifactId>jax4j-core</artifactId>
+  <version>0.1.0</version>
+</dependency>
+<dependency>
+  <groupId>com.nablatensor</groupId>
+  <artifactId>jax4j-engine-vulkan</artifactId>
+  <version>0.1.0</version>
+  <scope>runtime</scope>
+</dependency>
+```
+
+Use `jax4j-engine-wgpu` for wgpu-native. The parent artifact `jax4j` is a POM.
+CUDA, ROCm and SIMD artifacts are also available; this publication validated
+only Vulkan and wgpu. The Maven Central binary JARs match the GitHub v0.1.0
+release assets byte for byte. Finance APIs are maintained separately in
+[NablaTensor Quant](https://github.com/nablatensor-dev/quant).
+
 ## Build and validate
 
 ```sh

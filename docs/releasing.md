@@ -154,3 +154,20 @@ mvn -Pcuda,rocm,examples,simd -DskipTests install
 Replace `v0.1.0` with the desired release tag. After publication, a separate
 commit may advance all POMs to the next development `-SNAPSHOT` version; never
 change the published tag to include that commit.
+
+## Maven Central publication
+
+Version 0.1.0 is also published to Maven Central under `com.nablatensor`.
+The binary JARs match the existing GitHub release assets; source and Javadoc
+JARs were generated from the unchanged v0.1.0 tag. Publishing POMs supplement
+that tag's build metadata with required developer/SCM information and explicit
+names for the core, Vulkan and wgpu modules. The GitHub tag was not moved.
+
+The Central release was validated on real Vulkan and wgpu hardware (31 and 36
+checks respectively); optional CUDA/ROCm/SIMD artifacts were compiled but their
+backends were not tested. Examples are not published as library artifacts.
+
+The publication tooling and NablaTensor migration coordinates are maintained in
+[quant's release guide](https://github.com/nablatensor-dev/quant/blob/main/docs/releasing.md).
+Central credentials remain in the local Maven `central` server entry. Never
+commit credentials or overwrite an already-published Central version.
