@@ -1,0 +1,182 @@
+{
+  "validatedUtc": "2026-10-18T07:44:28.254622+00:00",
+  "parentCommit": "21ac4c9",
+  "sourceSnapshotSha256": "7520a10d9bdf1cd3a9f8afcf7de8f075c66d4bd829c94d3fdcc91e7c5cda82dd",
+  "sourceSnapshotMatchesWorkspace": true,
+  "javaVersion": "25.0.1",
+  "nativeVersion": "29.0.1.1",
+  "nativeLibrarySha256": "be0d8270dd9d78e1039eeb413ee21be8a89776a752e56d6b0f57eefbbc2d749c",
+  "device": "AMD Radeon Graphics (RADV PHOENIX) (Vulkan)",
+  "totals": {
+    "tests": 119,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 1,
+    "passed": 118
+  },
+  "suites": [
+    {
+      "module": "jax4j-core",
+      "name": "com.jax4j.autodiff.AutoDiffTreeTest",
+      "tests": 5,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-core",
+      "name": "com.jax4j.nn.DenseTest",
+      "tests": 2,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-core",
+      "name": "com.jax4j.nn.MaskedPoolingTest",
+      "tests": 2,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-core",
+      "name": "com.jax4j.ops.OpsTest",
+      "tests": 7,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 1
+    },
+    {
+      "module": "jax4j-core",
+      "name": "com.jax4j.tensor.JaxParityTest",
+      "tests": 1,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-core",
+      "name": "com.jax4j.tensor.JitTest",
+      "tests": 5,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-core",
+      "name": "com.jax4j.tensor.TransformsTest",
+      "tests": 21,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-core",
+      "name": "com.jax4j.tensor.TreeCloseAllTest",
+      "tests": 1,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-core",
+      "name": "com.jax4j.tensor.VmapTest",
+      "tests": 1,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-core",
+      "name": "com.jax4j.tensor.tree.TreeUtilTest",
+      "tests": 7,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-engine-vulkan",
+      "name": "com.jax4j.backend.vulkan.VulkanExecutionTest",
+      "tests": 4,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-engine-vulkan",
+      "name": "com.jax4j.backend.vulkan.VulkanTensorTest",
+      "tests": 6,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-engine-vulkan",
+      "name": "com.jax4j.backend.vulkan.VulkanTransformsTest",
+      "tests": 21,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-engine-wgpu",
+      "name": "com.jax4j.backend.wgpu.WgpuAvailabilityTest",
+      "tests": 2,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-engine-wgpu",
+      "name": "com.jax4j.backend.wgpu.WgpuExecutionTest",
+      "tests": 4,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-engine-wgpu",
+      "name": "com.jax4j.backend.wgpu.WgpuScaleTest",
+      "tests": 3,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-engine-wgpu",
+      "name": "com.jax4j.backend.wgpu.WgpuTensorTest",
+      "tests": 6,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "module": "jax4j-engine-wgpu",
+      "name": "com.jax4j.backend.wgpu.WgpuTransformsTest",
+      "tests": 21,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    }
+  ],
+  "command": "mvn -f /tmp/jax4j-wgpu-validation/pom.xml clean test -Djax4j.wgpu.tests=true -Djax4j.vulkan.tests=true",
+  "validationIsolation": "Exact source snapshot under /tmp avoids concurrent IDE writes to workspace target directories.",
+  "nativeDistribution": {
+    "url": "https://github.com/gfx-rs/wgpu-native/releases/download/v29.0.1.1/wgpu-linux-x86_64-release.zip",
+    "sha256": "95a4d90c071005a98d03eab348beaa6b07e16eb00d1dcdb9f8348f75eb97ec5a",
+    "installedBinaryMatchesPreviouslyCachedBinary": true
+  },
+  "regressions": [
+    "Large multi-workgroup zero/sum/max reductions",
+    "Nonuniform tiled matmul with tail dimensions",
+    "Large functional Adam bias correction and finite output",
+    "Explicit CPU startup without wgpu native library",
+    "Explicit unavailable wgpu requests reject fallback"
+  ],
+  "benchmark": "wgpu-vulkan-benchmark.json",
+  "shaderPaths": {
+    "cooperativeKernels": "WGSL with explicit workgroupBarrier",
+    "otherKernels": "wgpu-native GLSL extension, validated and lowered by Naga"
+  }
+}
