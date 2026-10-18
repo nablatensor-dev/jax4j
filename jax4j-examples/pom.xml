@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
-  <parent><groupId>com.nablatensor</groupId><artifactId>jax4j</artifactId><version>0.1.0</version></parent>
+  <parent><groupId>com.nablatensor</groupId><artifactId>jax4j</artifactId><version>0.2.0</version></parent>
   <artifactId>jax4j-examples</artifactId>
   <dependencies>
     <dependency><groupId>com.nablatensor</groupId><artifactId>jax4j-core</artifactId><version>${project.version}</version></dependency>

@@ -21,8 +21,16 @@ This supersedes the earlier Vulkan-only deferral of wgpu below.
   `jax4j-engine-vulkan`, depending only on core.
 - CUDA and ROCm each combine tensor runtime and scalar replay in
   `jax4j-engine-cuda` and `jax4j-engine-rocm`, depending only on core.
-  Optional profiles `cuda` and `rocm` include them in the reactor; native execution
-  remains unverified.
+  Optional profiles `cuda` and `rocm` include them in the reactor. CUDA tensor
+  arithmetic/reduction, fill, matmul, JIT replay and compiled gradients were
+  validated on zbox's GTX 1060 on 2026-10-18 using
+  `mvn -Pcuda -Djax4j.cuda.tests=true test` (Java 25, driver 580.178.04,
+  NVRTC 12). All three scalar CUDA engines (`cuda`, `cuda-interp`, `cuda-eager`)
+  also pass 18 checks spanning FP32/FP64, value-only/adjoint replay, input updates
+  and normal random draws compared with CPU results. Interpreted/eager opcode
+  definitions are generated from `AadOp` to prevent enum drift. Multi-output
+  tapes, uniform draws and named random streams remain unsupported by these
+  scalar engines. ROCm hardware remains unverified.
 - Optional examples contain the MNIST MLP and generic primitive/random checks.
 - `Jit.compile` caches captured fused-kernel sequences by backend, shape, dtype
   and device. `Jit.compileTree` accepts Tensor pytrees and preserves structured
@@ -94,12 +102,13 @@ The full roadmap is **not complete**. Parallel device-region lowering, efficient
 higher-order scan lowering, graph-aware views/matmul epilogues, allocation pooling,
 selectable per-device numerical policies, and broad device-specific performance
 budgets remain. P2 sharding, collectives and export remain unimplemented.
-OpenCL and CUDA/ROCm restoration remain deferred. The wgpu tensor backend is
+OpenCL and ROCm hardware validation remain deferred. CUDA validation above covers
+basic tensor execution, not full transform or performance parity. The wgpu tensor backend is
 implemented; its setup, contracts and limits are documented separately.
 
 ## Maven migration
 
-All artifacts below use group `com.nablatensor` and version `0.1.0`.
+All artifacts below use group `com.nablatensor` and version `0.2.0` (GitHub release; Maven Central remains at `0.1.0`).
 
 | Previous artifacts | Destination |
 | --- | --- |

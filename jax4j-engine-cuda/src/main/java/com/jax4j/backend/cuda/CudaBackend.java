@@ -43,6 +43,10 @@ public final class CudaBackend implements ComputeBackend {
   private static final int BLOCK = 256;
 
   private static final String KERNEL_SOURCE = """
+      extern "C" __global__ void fill(float* out, float value, int n) {
+        int i = blockIdx.x * blockDim.x + threadIdx.x;
+        if (i < n) out[i] = value;
+      }
       extern "C" __global__ void ew_binary(float* out, const float* a, const float* b, int n, int op) {
         int i = blockIdx.x * blockDim.x + threadIdx.x;
         if (i >= n) return;
@@ -440,7 +444,7 @@ public final class CudaBackend implements ComputeBackend {
     }
     deviceInfo = CudaRuntime.context();
     byte[] ptx = CudaRuntime.compile(KERNEL_SOURCE, deviceInfo.arch());
-    for (String kernel : new String[] {"ew_binary", "ew_scalar", "ew_unary", "transpose2d", "matmul_tiled",
+    for (String kernel : new String[] {"fill", "ew_binary", "ew_scalar", "ew_unary", "transpose2d", "matmul_tiled",
         "batched_matmul_tiled",
         "random_uniform", "random_normal",
         "reduce_sum", "reduce_max", "sum_axis0", "reduce_axis_sum", "reduce_axis_max",
@@ -478,6 +482,18 @@ public final class CudaBackend implements ComputeBackend {
     CudaBuffer out = alloc(shape);
     CudaRuntime.launch(functions.get("random_uniform"), grid(size), BLOCK,
         out.pointer, seed, counter, size);
+    return out;
+  }
+
+  @Override
+  public DeviceBuffer full(float value, Shape shape, DType dtype, Device device) {
+    ensureInitialized();
+    if (dtype != DType.F32) {
+      throw new UnsupportedOperationException("CUDA fill supports F32 only, got " + dtype);
+    }
+    int size = Math.toIntExact(shape.size());
+    CudaBuffer out = alloc(shape, dtype, device);
+    CudaRuntime.launch(functions.get("fill"), grid(size), BLOCK, out.pointer, (float) value, size);
     return out;
   }
 

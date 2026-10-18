@@ -1,11 +1,19 @@
 # JAX4J
 
 Java 25 tensors, automatic differentiation and neural networks under
-`com.nablatensor:jax4j:0.1.0`. The fluent Tensor API supports fused
-CPU, Vulkan and wgpu-native execution. There are no dependencies on SonicTensor,
+`com.nablatensor:jax4j:0.2.0`. The fluent Tensor API supports fused
+CPU, CUDA, Vulkan and wgpu-native execution. There are no dependencies on SonicTensor,
 NablaTensor or TensorJIT JARs.
 
 Release maintainers: see [the release guide](docs/releasing.md).
+
+## Releases
+
+[JAX4J 0.2.0](https://github.com/nablatensor-dev/jax4j/releases/tag/v0.2.0)
+provides seven module JARs and SHA-256 checksums. Build/install from the tag with
+`mvn -Pcuda,rocm,examples,simd install`. CUDA tensor and scalar replay validation
+is described below. Version 0.2.0 is a GitHub release; Maven Central currently
+contains 0.1.0.
 
 ## Maven Central
 
@@ -38,6 +46,7 @@ release assets byte for byte. Finance APIs are maintained separately in
 export JAVA_HOME=/opt/zulu25.30.17-ca-jdk25.0.1-linux_x64
 export PATH="$JAVA_HOME/bin:$PATH"
 mvn test
+mvn -Pcuda -Djax4j.cuda.tests=true test
 mvn -Djax4j.vulkan.tests=true test
 mvn -Djax4j.wgpu.tests=true -Djax4j.vulkan.tests=true test
 mvn -Pexamples test
@@ -63,7 +72,15 @@ The scalar API uses `Nabla.Evaluator` / `TypedEvaluator`, `Evaluation` /
 
 Core, Vulkan and wgpu form the default reactor. CUDA and ROCm each combine their
 tensor runtime and scalar replay engine in one module. Build them with `-Pcuda`
-and `-Procm`, or both with `-Pcuda,rocm`; their hardware execution is unverified.
+and `-Procm`, or both with `-Pcuda,rocm`. CUDA tensor execution was validated on
+`zbox` (GeForce GTX 1060, driver 580.178.04, NVRTC 12) with Java 25 on
+2026-10-18. Opt-in CUDA tests cover arithmetic/reduction, device fill, matrix
+multiplication, JIT replay and compiled tensor gradients; unavailable CUDA fails
+these tests when enabled. Scalar replay tests also validate `cuda`, `cuda-interp`
+and `cuda-eager` in FP32/FP64, with and without adjoints, updated inputs, and
+normal random draws against CPU results (18 scalar checks, 5 tensor checks).
+ROCm hardware remains unverified. CUDA scalar replay still rejects multi-output
+tapes, uniform draws and named random streams.
 SIMD scalar replay remains optional under `-Psimd`.
 
 For native installation, API usage, validation and measured speed comparisons,

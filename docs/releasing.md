@@ -63,6 +63,13 @@ mvn -Pcuda,rocm,examples,simd \
 
 Explicit hardware checks fail when their backend is unavailable. A successful
 compile of the CUDA/ROCm modules does not establish native runtime correctness.
+On an NVIDIA host with the CUDA driver and NVRTC installed, validate tensor and
+all three scalar replay engines explicitly:
+
+```sh
+mvn -Pcuda -Djax4j.cuda.tests=true clean verify
+```
+
 Review failures and skipped tests before proceeding. Check the release diff:
 
 ```sh

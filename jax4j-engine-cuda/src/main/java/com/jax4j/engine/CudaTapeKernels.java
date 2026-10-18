@@ -86,7 +86,13 @@ final class CudaTapeKernels {
         .replace("RMIN", f32 ? "fminf" : "fmin")
         .replace("RSIN", f32 ? "__sinf" : "sin")
         .replace("RCOS", f32 ? "__cosf" : "cos");
-    return "#define BLOCK " + BLOCK + "\n#define MAX_INPUTS " + MAX_INPUTS + "\n" + body;
+    StringBuilder opcodes = new StringBuilder();
+    for (AadOp op : AadOp.values()) {
+      opcodes.append("#define OP_").append(op.name()).append(" ")
+          .append(opcode(op)).append("\n");
+    }
+    return "#define BLOCK " + BLOCK + "\n#define MAX_INPUTS " + MAX_INPUTS + "\n"
+        + opcodes + body;
   }
 
   // Opcode numbers are AadOp ordinals; see opcode().
@@ -96,21 +102,6 @@ final class CudaTapeKernels {
 
   private static final String TEMPLATE = """
       typedef REAL real;
-
-      #define OP_CONST 0
-      #define OP_INPUT 1
-      #define OP_RANDN 2
-      #define OP_ADD   3
-      #define OP_SUB   4
-      #define OP_MUL   5
-      #define OP_DIV   6
-      #define OP_NEG   7
-      #define OP_EXP   8
-      #define OP_LOG   9
-      #define OP_SQRT  10
-      #define OP_MAX   11
-      #define OP_MIN   12
-      #define OP_ABS   13
 
       // Same counter-based stream as the generated kernel: draw k is Philox
       // counter k/2, cosine half when k is even and sine half when it is odd.
