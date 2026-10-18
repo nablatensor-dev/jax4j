@@ -1,9 +1,11 @@
 # JAX4J
 
 Java 25 tensors, automatic differentiation and neural networks under
-`com.nablatensor:jax4j:0.1.0-SNAPSHOT`. The fluent Tensor API supports fused
+`com.nablatensor:jax4j:0.1.0`. The fluent Tensor API supports fused
 CPU, Vulkan and wgpu-native execution. There are no dependencies on SonicTensor,
 NablaTensor or TensorJIT JARs.
+
+Release maintainers: see [the release guide](docs/releasing.md).
 
 ## Build and validate
 

@@ -99,7 +99,7 @@ implemented; its setup, contracts and limits are documented separately.
 
 ## Maven migration
 
-All artifacts below use group `com.nablatensor` and version `0.1.0-SNAPSHOT`.
+All artifacts below use group `com.nablatensor` and version `0.1.0`.
 
 | Previous artifacts | Destination |
 | --- | --- |

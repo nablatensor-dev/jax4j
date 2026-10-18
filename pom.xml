@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.nablatensor</groupId>
   <artifactId>jax4j</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
   <packaging>pom</packaging>
   <name>JAX4J</name>
   <description>Self-contained Java 25 tensor, autodiff and neural-network toolkit, migrated from the SonicTensor/NablaTensor lineage with TensorJIT CPU/autodiff sources.</description>
