@@ -1,7 +1,7 @@
 # JAX4J
 
 Java 25 tensors, automatic differentiation and neural networks under
-`com.nablatensor:jax4j:0.2.0`. The fluent Tensor API supports fused
+`com.nablatensor:jax4j:0.2.1`. The fluent Tensor API supports fused
 CPU, CUDA, Vulkan and wgpu-native execution. There are no dependencies on SonicTensor,
 NablaTensor or TensorJIT JARs.
 
@@ -9,34 +9,34 @@ Release maintainers: see [the release guide](docs/releasing.md).
 
 ## Releases
 
-[JAX4J 0.2.0](https://github.com/nablatensor-dev/jax4j/releases/tag/v0.2.0)
+[JAX4J 0.2.1](https://github.com/nablatensor-dev/jax4j/releases/tag/v0.2.1)
 provides seven module JARs and SHA-256 checksums. Build/install from the tag with
 `mvn -Pcuda,rocm,examples,simd install`. CUDA tensor and scalar replay validation
-is described below. Version 0.2.0 is also published to Maven Central.
+is described below. Version 0.2.1 is also published to Maven Central.
 
 ## Maven Central
 
-JAX4J 0.2.0 is published under `com.nablatensor` on
-[Maven Central](https://central.sonatype.com/artifact/com.nablatensor/jax4j-core/0.2.0).
+JAX4J 0.2.1 is published under `com.nablatensor` on
+[Maven Central](https://central.sonatype.com/artifact/com.nablatensor/jax4j-core/0.2.1).
 
 ```xml
 <dependency>
   <groupId>com.nablatensor</groupId>
   <artifactId>jax4j-core</artifactId>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
 </dependency>
 <dependency>
   <groupId>com.nablatensor</groupId>
   <artifactId>jax4j-engine-vulkan</artifactId>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
   <scope>runtime</scope>
 </dependency>
 ```
 
 Use `jax4j-engine-wgpu` for wgpu-native. The parent artifact `jax4j` is a POM.
-CUDA, ROCm and SIMD artifacts are also available. Version 0.2.0 validated CUDA,
-Vulkan and wgpu hardware; ROCm and SIMD execution remain unverified. The Maven
-Central binary JARs match the GitHub v0.2.0 release assets byte for byte. Finance APIs are maintained separately in
+CUDA, ROCm and SIMD artifacts are also available. Version 0.2.1 validated Vulkan and wgpu hardware; CUDA, ROCm and SIMD
+execution remain unverified for this version. The Maven
+Central binary JARs match the GitHub v0.2.1 release assets byte for byte. Finance APIs are maintained separately in
 [NablaTensor Quant](https://github.com/nablatensor-dev/quant).
 
 ## Build and validate
@@ -64,7 +64,8 @@ failure. CPU tests never need a GPU. Native execution uses Java FFM with
 | `jax4j-engine-wgpu` | wgpu-native tensor runtime, WGSL cooperative kernels and native GLSL/Naga lowering |
 | `jax4j-examples` | Optional examples and numerical validation harnesses (`-Pexamples`) |
 
-Java packages use `com.jax4j`; tensor factories are available through `Tensors`.
+Version 0.2.1 corrects the Java package namespace. Update imports when upgrading from earlier releases.
+Java packages use `com.nablatensor.jax4j`; tensor factories are available through `Tensors`.
 Select a default backend with `-Djax4j.tensor.backend=cpu` or `JAX4J_BACKEND=cpu`.
 The scalar API uses `Nabla.Evaluator` / `TypedEvaluator`, `Evaluation` /
 `TypedEvaluation`, `valueOnly()`, `value()`, `gradient()` and `gradients()`.
@@ -136,5 +137,5 @@ For synchronized Vulkan timing and dispatch/allocation/transfer counts:
 mvn -DskipTests package
 java --enable-native-access=ALL-UNNAMED \
   -cp jax4j-core/target/classes:jax4j-engine-vulkan/target/classes \
-  com.jax4j.backend.vulkan.VulkanBenchmark
+  com.nablatensor.jax4j.backend.vulkan.VulkanBenchmark
 ```

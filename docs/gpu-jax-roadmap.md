@@ -188,7 +188,7 @@ Concrete consolidation map:
 
 | Existing JAX4J modules | Destination |
 | --- | --- |
-| tensor + backend-cpu + autodiff + nn | core, preserving com.jax4j.tensor/autodiff/nn packages |
+| tensor + backend-cpu + autodiff + nn | core, preserving com.nablatensor.jax4j.tensor/autodiff/nn packages |
 | current core scalar recording/replay contracts + cpu + jit-cpu + simd + ops | core packages where reusable; optional SIMD selected at runtime/build profile without making CPU require incubator flags |
 | backend-cuda + cuda | engine-cuda |
 | backend-rocm + rocm | engine-rocm |

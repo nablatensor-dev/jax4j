@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.nablatensor</groupId>
   <artifactId>jax4j</artifactId>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
   <packaging>pom</packaging>
   <name>JAX4J</name>
   <description>Self-contained Java 25 tensor, autodiff and neural-network toolkit, migrated from the SonicTensor/NablaTensor lineage with TensorJIT CPU/autodiff sources.</description>
@@ -54,5 +54,79 @@
     <profile><id>rocm</id><modules><module>jax4j-engine-rocm</module></modules></profile>
     <profile><id>examples</id><modules><module>jax4j-examples</module></modules></profile>
     <profile><id>simd</id><modules><module>jax4j-simd</module></modules></profile>
+<profile>
+      <id>central-artifacts</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.3.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.11.2</version>
+            <executions>
+              <execution>
+                <id>attach-javadoc</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <quiet>true</quiet>
+              <doclint>none</doclint>
+              <failOnError>true</failOnError>
+              <additionalOptions><additionalOption>--add-modules jdk.incubator.vector</additionalOption><additionalOption>--no-fonts</additionalOption></additionalOptions>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.7</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
   </profiles>
+<developers>
+    <developer>
+      <id>petrpravda</id>
+      <name>Petr Pravda</name>
+    </developer>
+  </developers>
+
+<scm>
+    <connection>scm:git:https://github.com/nablatensor-dev/jax4j.git</connection>
+    <developerConnection>scm:git:git@github.com:nablatensor-dev/jax4j.git</developerConnection>
+    <url>https://github.com/nablatensor-dev/jax4j</url>
+    <tag>v0.2.1</tag>
+  </scm>
+
 </project>

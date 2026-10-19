@@ -17,23 +17,23 @@
     },
     {
       "from": "nablatensor-backend-cuda/src/main/java/com/nablatensor/backend/cuda/CudaBackend.java",
-      "to": "jax4j-engine-cuda/src/main/java/com/jax4j/backend/cuda/CudaBackend.java"
+      "to": "jax4j-engine-cuda/src/main/java/com/nablatensor/jax4j/backend/cuda/CudaBackend.java"
     },
     {
       "from": "nablatensor-backend-cuda/src/main/java/com/nablatensor/backend/cuda/CudaBuffer.java",
-      "to": "jax4j-engine-cuda/src/main/java/com/jax4j/backend/cuda/CudaBuffer.java"
+      "to": "jax4j-engine-cuda/src/main/java/com/nablatensor/jax4j/backend/cuda/CudaBuffer.java"
     },
     {
       "from": "nablatensor-backend-cuda/src/main/java/com/nablatensor/backend/cuda/CudaJit.java",
-      "to": "jax4j-engine-cuda/src/main/java/com/jax4j/backend/cuda/CudaJit.java"
+      "to": "jax4j-engine-cuda/src/main/java/com/nablatensor/jax4j/backend/cuda/CudaJit.java"
     },
     {
       "from": "nablatensor-backend-cuda/src/main/java/com/nablatensor/backend/cuda/CudaRuntime.java",
-      "to": "jax4j-engine-cuda/src/main/java/com/jax4j/backend/cuda/CudaRuntime.java"
+      "to": "jax4j-engine-cuda/src/main/java/com/nablatensor/jax4j/backend/cuda/CudaRuntime.java"
     },
     {
       "from": "nablatensor-backend-cuda/src/main/resources/META-INF/services/com.nablatensor.tensor.spi.ComputeBackend",
-      "to": "jax4j-engine-cuda/src/main/resources/META-INF/services/com.jax4j.tensor.spi.ComputeBackend"
+      "to": "jax4j-engine-cuda/src/main/resources/META-INF/services/com.nablatensor.jax4j.tensor.spi.ComputeBackend"
     },
     {
       "from": "nablatensor-backend-rocm/pom.xml",
@@ -41,39 +41,39 @@
     },
     {
       "from": "nablatensor-backend-rocm/src/main/java/com/nablatensor/backend/rocm/HipBuffer.java",
-      "to": "jax4j-engine-rocm/src/main/java/com/jax4j/backend/rocm/HipBuffer.java"
+      "to": "jax4j-engine-rocm/src/main/java/com/nablatensor/jax4j/backend/rocm/HipBuffer.java"
     },
     {
       "from": "nablatensor-backend-rocm/src/main/java/com/nablatensor/backend/rocm/HipCompute.java",
-      "to": "jax4j-engine-rocm/src/main/java/com/jax4j/backend/rocm/HipCompute.java"
+      "to": "jax4j-engine-rocm/src/main/java/com/nablatensor/jax4j/backend/rocm/HipCompute.java"
     },
     {
       "from": "nablatensor-backend-rocm/src/main/java/com/nablatensor/backend/rocm/HipRuntime.java",
-      "to": "jax4j-engine-rocm/src/main/java/com/jax4j/backend/rocm/HipRuntime.java"
+      "to": "jax4j-engine-rocm/src/main/java/com/nablatensor/jax4j/backend/rocm/HipRuntime.java"
     },
     {
       "from": "nablatensor-backend-rocm/src/main/java/com/nablatensor/backend/rocm/RocmBackend.java",
-      "to": "jax4j-engine-rocm/src/main/java/com/jax4j/backend/rocm/RocmBackend.java"
+      "to": "jax4j-engine-rocm/src/main/java/com/nablatensor/jax4j/backend/rocm/RocmBackend.java"
     },
     {
       "from": "nablatensor-backend-rocm/src/main/resources/META-INF/services/com.nablatensor.tensor.spi.ComputeBackend",
-      "to": "jax4j-engine-rocm/src/main/resources/META-INF/services/com.jax4j.tensor.spi.ComputeBackend"
+      "to": "jax4j-engine-rocm/src/main/resources/META-INF/services/com.nablatensor.jax4j.tensor.spi.ComputeBackend"
     },
     {
       "from": "nablatensor-backend-vulkan/src/main/java/com/nablatensor/backend/vulkan/VulkanBackend.java",
-      "to": "jax4j-engine-vulkan/src/main/java/com/jax4j/backend/vulkan/VulkanBackend.java"
+      "to": "jax4j-engine-vulkan/src/main/java/com/nablatensor/jax4j/backend/vulkan/VulkanBackend.java"
     },
     {
       "from": "nablatensor-backend-vulkan/src/main/java/com/nablatensor/backend/vulkan/VulkanCompute.java",
-      "to": "jax4j-engine-vulkan/src/main/java/com/jax4j/backend/vulkan/VulkanCompute.java"
+      "to": "jax4j-engine-vulkan/src/main/java/com/nablatensor/jax4j/backend/vulkan/VulkanCompute.java"
     },
     {
       "from": "nablatensor-backend-vulkan/src/main/java/com/nablatensor/backend/vulkan/VulkanRuntime.java",
-      "to": "jax4j-engine-vulkan/src/main/java/com/jax4j/backend/vulkan/VulkanRuntime.java"
+      "to": "jax4j-engine-vulkan/src/main/java/com/nablatensor/jax4j/backend/vulkan/VulkanRuntime.java"
     },
     {
       "from": "nablatensor-backend-vulkan/src/main/resources/META-INF/services/com.nablatensor.tensor.spi.ComputeBackend",
-      "to": "jax4j-engine-vulkan/src/main/resources/META-INF/services/com.jax4j.tensor.spi.ComputeBackend"
+      "to": "jax4j-engine-vulkan/src/main/resources/META-INF/services/com.nablatensor.jax4j.tensor.spi.ComputeBackend"
     },
     {
       "from": "nablatensor-core/pom.xml",
@@ -81,99 +81,99 @@
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/annotation/Internal.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/annotation/Internal.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/annotation/Internal.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/AadCheckpointPlan.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/AadCheckpointPlan.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/AadCheckpointPlan.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/AadEngine.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/AadEngine.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/AadEngine.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/AadEngines.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/AadEngines.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/AadEngines.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/AadExecutable.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/AadExecutable.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/AadExecutable.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/AadOp.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/AadOp.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/AadOp.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/AadOptions.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/AadOptions.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/AadOptions.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/AadRecorder.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/AadRecorder.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/AadRecorder.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/AadResult.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/AadResult.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/AadResult.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/AadResultAccumulator.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/AadResultAccumulator.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/AadResultAccumulator.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/AadTape.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/AadTape.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/AadTape.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/AbstractAadExecutable.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/AbstractAadExecutable.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/AbstractAadExecutable.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/ChunkedReplay.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/ChunkedReplay.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/ChunkedReplay.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/CudaAadCodegen.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/CudaAadCodegen.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/CudaAadCodegen.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/JitOptimizations.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/JitOptimizations.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/JitOptimizations.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/MarketShape.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/InputShape.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/InputShape.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/Nabla.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/Nabla.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/Nabla.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/SDouble.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/SDouble.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/SDouble.java"
     },
     {
       "from": "nablatensor-core/src/main/java/com/nablatensor/engine/package-info.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/package-info.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/package-info.java"
     },
     {
       "from": "nablatensor-cpu/src/main/java/com/nablatensor/engine/cpu/AadCpuReplay.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/cpu/AadCpuReplay.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/cpu/AadCpuReplay.java"
     },
     {
       "from": "nablatensor-cpu/src/main/java/com/nablatensor/engine/cpu/CpuAadEngine.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/cpu/CpuAadEngine.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/cpu/CpuAadEngine.java"
     },
     {
       "from": "nablatensor-cpu/src/main/java/com/nablatensor/engine/cpu/Philox.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/cpu/Philox.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/cpu/Philox.java"
     },
     {
       "from": "nablatensor-cpu/src/main/java/com/nablatensor/engine/cpu/ScalarReplay.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/cpu/ScalarReplay.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/cpu/ScalarReplay.java"
     },
     {
       "from": "nablatensor-cpu/src/main/resources/META-INF/services/com.nablatensor.engine.AadEngine",
-      "to": "jax4j-core/src/main/resources/META-INF/services/com.jax4j.engine.AadEngine"
+      "to": "jax4j-core/src/main/resources/META-INF/services/com.nablatensor.jax4j.engine.AadEngine"
     },
     {
       "from": "nablatensor-cuda/pom.xml",
@@ -181,35 +181,35 @@
     },
     {
       "from": "nablatensor-cuda/src/main/java/com/nablatensor/engine/AadKernel.java",
-      "to": "jax4j-engine-cuda/src/main/java/com/jax4j/engine/AadKernel.java"
+      "to": "jax4j-engine-cuda/src/main/java/com/nablatensor/jax4j/engine/AadKernel.java"
     },
     {
       "from": "nablatensor-cuda/src/main/java/com/nablatensor/engine/CudaAadEngine.java",
-      "to": "jax4j-engine-cuda/src/main/java/com/jax4j/engine/CudaAadEngine.java"
+      "to": "jax4j-engine-cuda/src/main/java/com/nablatensor/jax4j/engine/CudaAadEngine.java"
     },
     {
       "from": "nablatensor-cuda/src/main/java/com/nablatensor/engine/CudaEagerEngine.java",
-      "to": "jax4j-engine-cuda/src/main/java/com/jax4j/engine/CudaEagerEngine.java"
+      "to": "jax4j-engine-cuda/src/main/java/com/nablatensor/jax4j/engine/CudaEagerEngine.java"
     },
     {
       "from": "nablatensor-cuda/src/main/java/com/nablatensor/engine/CudaEagerExecutable.java",
-      "to": "jax4j-engine-cuda/src/main/java/com/jax4j/engine/CudaEagerExecutable.java"
+      "to": "jax4j-engine-cuda/src/main/java/com/nablatensor/jax4j/engine/CudaEagerExecutable.java"
     },
     {
       "from": "nablatensor-cuda/src/main/java/com/nablatensor/engine/CudaInterpEngine.java",
-      "to": "jax4j-engine-cuda/src/main/java/com/jax4j/engine/CudaInterpEngine.java"
+      "to": "jax4j-engine-cuda/src/main/java/com/nablatensor/jax4j/engine/CudaInterpEngine.java"
     },
     {
       "from": "nablatensor-cuda/src/main/java/com/nablatensor/engine/CudaInterpExecutable.java",
-      "to": "jax4j-engine-cuda/src/main/java/com/jax4j/engine/CudaInterpExecutable.java"
+      "to": "jax4j-engine-cuda/src/main/java/com/nablatensor/jax4j/engine/CudaInterpExecutable.java"
     },
     {
       "from": "nablatensor-cuda/src/main/java/com/nablatensor/engine/CudaTapeKernels.java",
-      "to": "jax4j-engine-cuda/src/main/java/com/jax4j/engine/CudaTapeKernels.java"
+      "to": "jax4j-engine-cuda/src/main/java/com/nablatensor/jax4j/engine/CudaTapeKernels.java"
     },
     {
       "from": "nablatensor-cuda/src/main/resources/META-INF/services/com.nablatensor.engine.AadEngine",
-      "to": "jax4j-engine-cuda/src/main/resources/META-INF/services/com.jax4j.engine.AadEngine"
+      "to": "jax4j-engine-cuda/src/main/resources/META-INF/services/com.nablatensor.jax4j.engine.AadEngine"
     },
     {
       "from": "nablatensor-examples/pom.xml",
@@ -217,59 +217,59 @@
     },
     {
       "from": "nablatensor-examples/src/main/java/com/nablatensor/examples/MnistMlp.java",
-      "to": "jax4j-examples/src/main/java/com/jax4j/examples/MnistMlp.java"
+      "to": "jax4j-examples/src/main/java/com/nablatensor/jax4j/examples/MnistMlp.java"
     },
     {
       "from": "nablatensor-examples/src/test/java/com/nablatensor/examples/ExamplesSmokeTest.java",
-      "to": "jax4j-examples/src/test/java/com/jax4j/examples/ExamplesSmokeTest.java"
+      "to": "jax4j-examples/src/test/java/com/nablatensor/jax4j/examples/ExamplesSmokeTest.java"
     },
     {
       "from": "nablatensor-jit-cpu/src/main/java/com/nablatensor/engine/jit/JitAadEngine.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/jit/JitAadEngine.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/jit/JitAadEngine.java"
     },
     {
       "from": "nablatensor-jit-cpu/src/main/java/com/nablatensor/engine/jit/JitFastMath.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/jit/JitFastMath.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/jit/JitFastMath.java"
     },
     {
       "from": "nablatensor-jit-cpu/src/main/java/com/nablatensor/engine/jit/JitKernel.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/jit/JitKernel.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/jit/JitKernel.java"
     },
     {
       "from": "nablatensor-jit-cpu/src/main/java/com/nablatensor/engine/jit/JitKernelF32.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/jit/JitKernelF32.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/jit/JitKernelF32.java"
     },
     {
       "from": "nablatensor-jit-cpu/src/main/java/com/nablatensor/engine/jit/JitPhilox.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/jit/JitPhilox.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/jit/JitPhilox.java"
     },
     {
       "from": "nablatensor-jit-cpu/src/main/java/com/nablatensor/engine/jit/JitReplay.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/jit/JitReplay.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/jit/JitReplay.java"
     },
     {
       "from": "nablatensor-jit-cpu/src/main/java/com/nablatensor/engine/jit/KernelGenerator.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/engine/jit/KernelGenerator.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/engine/jit/KernelGenerator.java"
     },
     {
       "from": "nablatensor-jit-cpu/src/main/resources/META-INF/services/com.nablatensor.engine.AadEngine",
-      "to": "jax4j-core/src/main/resources/META-INF/services/com.jax4j.engine.AadEngine"
+      "to": "jax4j-core/src/main/resources/META-INF/services/com.nablatensor.jax4j.engine.AadEngine"
     },
     {
       "from": "nablatensor-ops/src/main/java/com/nablatensor/ops/CustomOp.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/ops/CustomOp.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/ops/CustomOp.java"
     },
     {
       "from": "nablatensor-ops/src/main/java/com/nablatensor/ops/Smooth.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/ops/Smooth.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/ops/Smooth.java"
     },
     {
       "from": "nablatensor-ops/src/main/java/com/nablatensor/ops/SpecialFn.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/ops/SpecialFn.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/ops/SpecialFn.java"
     },
     {
       "from": "nablatensor-ops/src/test/java/com/nablatensor/ops/OpsTest.java",
-      "to": "jax4j-core/src/test/java/com/jax4j/ops/OpsTest.java"
+      "to": "jax4j-core/src/test/java/com/nablatensor/jax4j/ops/OpsTest.java"
     },
     {
       "from": "nablatensor-rocm/pom.xml",
@@ -277,15 +277,15 @@
     },
     {
       "from": "nablatensor-rocm/src/main/java/com/nablatensor/engine/rocm/RocmAadEngine.java",
-      "to": "jax4j-engine-rocm/src/main/java/com/jax4j/engine/rocm/RocmAadEngine.java"
+      "to": "jax4j-engine-rocm/src/main/java/com/nablatensor/jax4j/engine/rocm/RocmAadEngine.java"
     },
     {
       "from": "nablatensor-rocm/src/main/java/com/nablatensor/engine/rocm/RocmAadKernel.java",
-      "to": "jax4j-engine-rocm/src/main/java/com/jax4j/engine/rocm/RocmAadKernel.java"
+      "to": "jax4j-engine-rocm/src/main/java/com/nablatensor/jax4j/engine/rocm/RocmAadKernel.java"
     },
     {
       "from": "nablatensor-rocm/src/main/resources/META-INF/services/com.nablatensor.engine.AadEngine",
-      "to": "jax4j-engine-rocm/src/main/resources/META-INF/services/com.jax4j.engine.AadEngine"
+      "to": "jax4j-engine-rocm/src/main/resources/META-INF/services/com.nablatensor.jax4j.engine.AadEngine"
     },
     {
       "from": "nablatensor-simd/pom.xml",
@@ -293,147 +293,147 @@
     },
     {
       "from": "nablatensor-simd/src/main/java/com/nablatensor/engine/simd/BatchedReplay.java",
-      "to": "jax4j-simd/src/main/java/com/jax4j/engine/simd/BatchedReplay.java"
+      "to": "jax4j-simd/src/main/java/com/nablatensor/jax4j/engine/simd/BatchedReplay.java"
     },
     {
       "from": "nablatensor-simd/src/main/java/com/nablatensor/engine/simd/SimdAadEngine.java",
-      "to": "jax4j-simd/src/main/java/com/jax4j/engine/simd/SimdAadEngine.java"
+      "to": "jax4j-simd/src/main/java/com/nablatensor/jax4j/engine/simd/SimdAadEngine.java"
     },
     {
       "from": "nablatensor-simd/src/main/java/com/nablatensor/engine/simd/SimdSupport.java",
-      "to": "jax4j-simd/src/main/java/com/jax4j/engine/simd/SimdSupport.java"
+      "to": "jax4j-simd/src/main/java/com/nablatensor/jax4j/engine/simd/SimdSupport.java"
     },
     {
       "from": "nablatensor-simd/src/main/java/com/nablatensor/engine/simd/VectorPhilox.java",
-      "to": "jax4j-simd/src/main/java/com/jax4j/engine/simd/VectorPhilox.java"
+      "to": "jax4j-simd/src/main/java/com/nablatensor/jax4j/engine/simd/VectorPhilox.java"
     },
     {
       "from": "nablatensor-simd/src/main/java/com/nablatensor/engine/simd/VectorReplayF32.java",
-      "to": "jax4j-simd/src/main/java/com/jax4j/engine/simd/VectorReplayF32.java"
+      "to": "jax4j-simd/src/main/java/com/nablatensor/jax4j/engine/simd/VectorReplayF32.java"
     },
     {
       "from": "nablatensor-simd/src/main/java/com/nablatensor/engine/simd/VectorReplayF64.java",
-      "to": "jax4j-simd/src/main/java/com/jax4j/engine/simd/VectorReplayF64.java"
+      "to": "jax4j-simd/src/main/java/com/nablatensor/jax4j/engine/simd/VectorReplayF64.java"
     },
     {
       "from": "nablatensor-simd/src/main/resources/META-INF/services/com.nablatensor.engine.AadEngine",
-      "to": "jax4j-simd/src/main/resources/META-INF/services/com.jax4j.engine.AadEngine"
+      "to": "jax4j-simd/src/main/resources/META-INF/services/com.nablatensor.jax4j.engine.AadEngine"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/Backend.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/Backend.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/Backend.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/BackendRegistry.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/BackendRegistry.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/BackendRegistry.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/ConvSpec.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/ConvSpec.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/ConvSpec.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/DType.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/DType.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/DType.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/Device.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/Device.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/Device.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/DeviceType.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/DeviceType.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/DeviceType.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/ExprBuffer.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/ExprBuffer.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/ExprBuffer.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/FusingBackend.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/FusingBackend.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/FusingBackend.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/Jit.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/Jit.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/Jit.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/Linalg.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/Linalg.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/Linalg.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/NablaTensors.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/Tensors.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/Tensors.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/Op.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/Op.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/Op.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/PrngKey.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/PrngKey.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/PrngKey.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/Shape.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/Shape.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/Shape.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/Tensor.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/Tensor.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/Tensor.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/expr/Expr.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/expr/Expr.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/expr/Expr.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/linalg/DenseLinalg.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/linalg/DenseLinalg.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/linalg/DenseLinalg.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/spi/ComputeBackend.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/spi/ComputeBackend.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/spi/ComputeBackend.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/spi/DeviceBuffer.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/spi/DeviceBuffer.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/spi/DeviceBuffer.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/tree/TreeDef.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/tree/TreeDef.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/tree/TreeDef.java"
     },
     {
       "from": "nablatensor-tensor/src/main/java/com/nablatensor/tensor/tree/TreeUtil.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/tree/TreeUtil.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/tree/TreeUtil.java"
     },
     {
       "from": "nablatensor-tensor/src/test/java/com/nablatensor/tensor/TreeCloseAllTest.java",
-      "to": "jax4j-core/src/test/java/com/jax4j/tensor/TreeCloseAllTest.java"
+      "to": "jax4j-core/src/test/java/com/nablatensor/jax4j/tensor/TreeCloseAllTest.java"
     },
     {
       "from": "nablatensor-tensor/src/test/java/com/nablatensor/tensor/tree/TreeUtilTest.java",
-      "to": "jax4j-core/src/test/java/com/jax4j/tensor/tree/TreeUtilTest.java"
+      "to": "jax4j-core/src/test/java/com/nablatensor/jax4j/tensor/tree/TreeUtilTest.java"
     },
     {
       "from": "nablatensor-validate/src/test/java/com/nablatensor/validate/AadOpConformanceTest.java",
-      "to": "jax4j-examples/src/test/java/com/jax4j/validate/AadOpConformanceTest.java"
+      "to": "jax4j-examples/src/test/java/com/nablatensor/jax4j/validate/AadOpConformanceTest.java"
     },
     {
       "from": "nablatensor-validate/src/test/java/com/nablatensor/validate/RandomStreamsTest.java",
-      "to": "jax4j-examples/src/test/java/com/jax4j/validate/RandomStreamsTest.java"
+      "to": "jax4j-examples/src/test/java/com/nablatensor/jax4j/validate/RandomStreamsTest.java"
     },
     {
       "from": "nablatensor-vulkan/src/main/java/com/nablatensor/engine/vulkan/VulkanAadCodegen.java",
-      "to": "jax4j-engine-vulkan/src/main/java/com/jax4j/engine/vulkan/VulkanAadCodegen.java"
+      "to": "jax4j-engine-vulkan/src/main/java/com/nablatensor/jax4j/engine/vulkan/VulkanAadCodegen.java"
     },
     {
       "from": "nablatensor-vulkan/src/main/java/com/nablatensor/engine/vulkan/VulkanAadEngine.java",
-      "to": "jax4j-engine-vulkan/src/main/java/com/jax4j/engine/vulkan/VulkanAadEngine.java"
+      "to": "jax4j-engine-vulkan/src/main/java/com/nablatensor/jax4j/engine/vulkan/VulkanAadEngine.java"
     },
     {
       "from": "nablatensor-vulkan/src/main/java/com/nablatensor/engine/vulkan/VulkanAadKernel.java",
-      "to": "jax4j-engine-vulkan/src/main/java/com/jax4j/engine/vulkan/VulkanAadKernel.java"
+      "to": "jax4j-engine-vulkan/src/main/java/com/nablatensor/jax4j/engine/vulkan/VulkanAadKernel.java"
     },
     {
       "from": "nablatensor-vulkan/src/main/resources/META-INF/services/com.nablatensor.engine.AadEngine",
-      "to": "jax4j-engine-vulkan/src/main/resources/META-INF/services/com.jax4j.engine.AadEngine"
+      "to": "jax4j-engine-vulkan/src/main/resources/META-INF/services/com.nablatensor.jax4j.engine.AadEngine"
     },
     {
       "from": "pom.xml",
@@ -441,51 +441,51 @@
     },
     {
       "from": "${HOME}/Projects/highprio/nablatensor-old/tensorjit-backend-cpu/src/main/resources/META-INF/services/com.tensorjit.core.spi.ComputeBackend",
-      "to": "jax4j-core/src/main/resources/META-INF/services/com.jax4j.tensor.spi.ComputeBackend"
+      "to": "jax4j-core/src/main/resources/META-INF/services/com.nablatensor.jax4j.tensor.spi.ComputeBackend"
     },
     {
       "from": "${HOME}/Projects/highprio/nablatensor-old/tensorjit-backend-cpu/src/main/java/com/tensorjit/backend/cpu/CpuBackend.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/backend/cpu/CpuBackend.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/backend/cpu/CpuBackend.java"
     },
     {
       "from": "${HOME}/Projects/highprio/nablatensor-old/tensorjit-backend-cpu/src/main/java/com/tensorjit/backend/cpu/CpuBuffer.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/backend/cpu/CpuBuffer.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/backend/cpu/CpuBuffer.java"
     },
     {
       "from": "${HOME}/Projects/highprio/nablatensor-old/tensorjit-backend-cpu/src/main/java/com/tensorjit/backend/cpu/CpuQ4Gemm.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/backend/cpu/CpuQ4Gemm.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/backend/cpu/CpuQ4Gemm.java"
     },
     {
       "from": "${HOME}/Projects/highprio/nablatensor-old/tensorjit-backend-cpu/src/main/java/com/tensorjit/backend/cpu/CpuQ2Gemm.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/backend/cpu/CpuQ2Gemm.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/backend/cpu/CpuQ2Gemm.java"
     },
     {
       "from": "${HOME}/Projects/highprio/nablatensor-old/tensorjit-backend-cpu/src/main/java/com/tensorjit/backend/cpu/CpuQuantBuffer.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/backend/cpu/CpuQuantBuffer.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/backend/cpu/CpuQuantBuffer.java"
     },
     {
       "from": "${HOME}/Projects/highprio/nablatensor-old/tensorjit-autodiff/src/main/java/com/tensorjit/autodiff/Tape.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/autodiff/Tape.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/autodiff/Tape.java"
     },
     {
       "from": "${HOME}/Projects/highprio/nablatensor-old/tensorjit-autodiff/src/main/java/com/tensorjit/autodiff/Var.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/autodiff/Var.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/autodiff/Var.java"
     },
     {
       "from": "${HOME}/Projects/highprio/nablatensor-old/tensorjit-autodiff/src/main/java/com/tensorjit/autodiff/AutoDiff.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/autodiff/AutoDiff.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/autodiff/AutoDiff.java"
     },
     {
       "from": "${HOME}/Projects/highprio/nablatensor-old/tensorjit-autodiff/src/test/java/com/tensorjit/autodiff/AutoDiffTreeTest.java",
-      "to": "jax4j-core/src/test/java/com/jax4j/autodiff/AutoDiffTreeTest.java"
+      "to": "jax4j-core/src/test/java/com/nablatensor/jax4j/autodiff/AutoDiffTreeTest.java"
     },
     {
       "from": "${HOME}/Projects/highprio/nablatensor-old/tensorjit-core/src/main/java/com/tensorjit/core/QuantType.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/QuantType.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/QuantType.java"
     },
     {
       "from": "${HOME}/Projects/highprio/nablatensor-old/tensorjit-core/src/main/java/com/tensorjit/core/spi/QuantizedOps.java",
-      "to": "jax4j-core/src/main/java/com/jax4j/tensor/spi/QuantizedOps.java"
+      "to": "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/spi/QuantizedOps.java"
     }
   ],
   "additionalSource": "${HOME}/Projects/highprio/nablatensor-old",
@@ -498,7 +498,7 @@
     "source": "${HOME}/Projects/highprio/nablatensor",
     "commit": "26006a665b074d4e231c8dfa405467afa90bc595",
     "from": "nablatensor-engine-wgpu/src/main/java/com/nablatensor/backend/wgpu/WgpuRuntime.java",
-    "to": "jax4j-engine-wgpu/src/main/java/com/jax4j/backend/wgpu/WgpuRuntime.java",
+    "to": "jax4j-engine-wgpu/src/main/java/com/nablatensor/jax4j/backend/wgpu/WgpuRuntime.java",
     "sourceSha256": "fb3c805400f03289a27922c284b9ca1d1f4ec05cce391a60070c1ccdc2172406",
     "license": "Apache-2.0; original copyright header retained",
     "modifications": [
@@ -517,13 +517,13 @@
   "sharedGpuExtraction": {
     "fromCommit": "21ac4c9",
     "from": [
-      "jax4j-engine-vulkan/src/main/java/com/jax4j/backend/vulkan/VulkanBackend.java",
-      "jax4j-engine-vulkan/src/main/java/com/jax4j/backend/vulkan/VulkanBuffer.java"
+      "jax4j-engine-vulkan/src/main/java/com/nablatensor/jax4j/backend/vulkan/VulkanBackend.java",
+      "jax4j-engine-vulkan/src/main/java/com/nablatensor/jax4j/backend/vulkan/VulkanBuffer.java"
     ],
     "to": [
-      "jax4j-core/src/main/java/com/jax4j/tensor/spi/GpuTensorBackend.java",
-      "jax4j-core/src/main/java/com/jax4j/tensor/spi/GpuBuffer.java",
-      "jax4j-core/src/main/java/com/jax4j/tensor/spi/GpuRuntime.java"
+      "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/spi/GpuTensorBackend.java",
+      "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/spi/GpuBuffer.java",
+      "jax4j-core/src/main/java/com/nablatensor/jax4j/tensor/spi/GpuRuntime.java"
     ],
     "reason": "Share tensor kernels and buffer contracts without making accelerator modules depend on one another."
   }

@@ -21,7 +21,7 @@ Consequently this is not claimed to be a byte-for-byte extraction of that cached
 release. The Java sources come from NablaTensor's initial public snapshot
 `2ddbe777752422ed5ba48b611e79017007119153`, whose tensor API corresponds to the
 inspected SonicTensor API. Source packages and Maven artifact names are migrated to
-`com.nablatensor` / `jax4j-*`, with Java packages under `com.jax4j`.
+`com.nablatensor` / `jax4j-*`, with Java packages under `com.nablatensor.jax4j`.
 The retained sources provide tensor, autodiff, neural-network and accelerator functionality.
 
 TensorJIT's CPU implementation, supporting quantization interfaces, and autodiff

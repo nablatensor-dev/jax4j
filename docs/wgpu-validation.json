@@ -17,7 +17,7 @@
   "suites": [
     {
       "module": "jax4j-core",
-      "name": "com.jax4j.autodiff.AutoDiffTreeTest",
+      "name": "com.nablatensor.jax4j.autodiff.AutoDiffTreeTest",
       "tests": 5,
       "errors": 0,
       "failures": 0,
@@ -25,7 +25,7 @@
     },
     {
       "module": "jax4j-core",
-      "name": "com.jax4j.nn.DenseTest",
+      "name": "com.nablatensor.jax4j.nn.DenseTest",
       "tests": 2,
       "errors": 0,
       "failures": 0,
@@ -33,7 +33,7 @@
     },
     {
       "module": "jax4j-core",
-      "name": "com.jax4j.nn.MaskedPoolingTest",
+      "name": "com.nablatensor.jax4j.nn.MaskedPoolingTest",
       "tests": 2,
       "errors": 0,
       "failures": 0,
@@ -41,7 +41,7 @@
     },
     {
       "module": "jax4j-core",
-      "name": "com.jax4j.ops.OpsTest",
+      "name": "com.nablatensor.jax4j.ops.OpsTest",
       "tests": 7,
       "errors": 0,
       "failures": 0,
@@ -49,7 +49,7 @@
     },
     {
       "module": "jax4j-core",
-      "name": "com.jax4j.tensor.JaxParityTest",
+      "name": "com.nablatensor.jax4j.tensor.JaxParityTest",
       "tests": 1,
       "errors": 0,
       "failures": 0,
@@ -57,7 +57,7 @@
     },
     {
       "module": "jax4j-core",
-      "name": "com.jax4j.tensor.JitTest",
+      "name": "com.nablatensor.jax4j.tensor.JitTest",
       "tests": 5,
       "errors": 0,
       "failures": 0,
@@ -65,7 +65,7 @@
     },
     {
       "module": "jax4j-core",
-      "name": "com.jax4j.tensor.TransformsTest",
+      "name": "com.nablatensor.jax4j.tensor.TransformsTest",
       "tests": 21,
       "errors": 0,
       "failures": 0,
@@ -73,7 +73,7 @@
     },
     {
       "module": "jax4j-core",
-      "name": "com.jax4j.tensor.TreeCloseAllTest",
+      "name": "com.nablatensor.jax4j.tensor.TreeCloseAllTest",
       "tests": 1,
       "errors": 0,
       "failures": 0,
@@ -81,7 +81,7 @@
     },
     {
       "module": "jax4j-core",
-      "name": "com.jax4j.tensor.VmapTest",
+      "name": "com.nablatensor.jax4j.tensor.VmapTest",
       "tests": 1,
       "errors": 0,
       "failures": 0,
@@ -89,7 +89,7 @@
     },
     {
       "module": "jax4j-core",
-      "name": "com.jax4j.tensor.tree.TreeUtilTest",
+      "name": "com.nablatensor.jax4j.tensor.tree.TreeUtilTest",
       "tests": 7,
       "errors": 0,
       "failures": 0,
@@ -97,7 +97,7 @@
     },
     {
       "module": "jax4j-engine-vulkan",
-      "name": "com.jax4j.backend.vulkan.VulkanExecutionTest",
+      "name": "com.nablatensor.jax4j.backend.vulkan.VulkanExecutionTest",
       "tests": 4,
       "errors": 0,
       "failures": 0,
@@ -105,7 +105,7 @@
     },
     {
       "module": "jax4j-engine-vulkan",
-      "name": "com.jax4j.backend.vulkan.VulkanTensorTest",
+      "name": "com.nablatensor.jax4j.backend.vulkan.VulkanTensorTest",
       "tests": 6,
       "errors": 0,
       "failures": 0,
@@ -113,7 +113,7 @@
     },
     {
       "module": "jax4j-engine-vulkan",
-      "name": "com.jax4j.backend.vulkan.VulkanTransformsTest",
+      "name": "com.nablatensor.jax4j.backend.vulkan.VulkanTransformsTest",
       "tests": 21,
       "errors": 0,
       "failures": 0,
@@ -121,7 +121,7 @@
     },
     {
       "module": "jax4j-engine-wgpu",
-      "name": "com.jax4j.backend.wgpu.WgpuAvailabilityTest",
+      "name": "com.nablatensor.jax4j.backend.wgpu.WgpuAvailabilityTest",
       "tests": 2,
       "errors": 0,
       "failures": 0,
@@ -129,7 +129,7 @@
     },
     {
       "module": "jax4j-engine-wgpu",
-      "name": "com.jax4j.backend.wgpu.WgpuExecutionTest",
+      "name": "com.nablatensor.jax4j.backend.wgpu.WgpuExecutionTest",
       "tests": 4,
       "errors": 0,
       "failures": 0,
@@ -137,7 +137,7 @@
     },
     {
       "module": "jax4j-engine-wgpu",
-      "name": "com.jax4j.backend.wgpu.WgpuScaleTest",
+      "name": "com.nablatensor.jax4j.backend.wgpu.WgpuScaleTest",
       "tests": 3,
       "errors": 0,
       "failures": 0,
@@ -145,7 +145,7 @@
     },
     {
       "module": "jax4j-engine-wgpu",
-      "name": "com.jax4j.backend.wgpu.WgpuTensorTest",
+      "name": "com.nablatensor.jax4j.backend.wgpu.WgpuTensorTest",
       "tests": 6,
       "errors": 0,
       "failures": 0,
@@ -153,7 +153,7 @@
     },
     {
       "module": "jax4j-engine-wgpu",
-      "name": "com.jax4j.backend.wgpu.WgpuTransformsTest",
+      "name": "com.nablatensor.jax4j.backend.wgpu.WgpuTransformsTest",
       "tests": 21,
       "errors": 0,
       "failures": 0,

@@ -21,91 +21,91 @@
   },
   "suites": [
     {
-      "name": "com.jax4j.autodiff.AutoDiffTreeTest",
+      "name": "com.nablatensor.jax4j.autodiff.AutoDiffTreeTest",
       "tests": 5,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     {
-      "name": "com.jax4j.nn.DenseTest",
+      "name": "com.nablatensor.jax4j.nn.DenseTest",
       "tests": 2,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     {
-      "name": "com.jax4j.nn.MaskedPoolingTest",
+      "name": "com.nablatensor.jax4j.nn.MaskedPoolingTest",
       "tests": 2,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     {
-      "name": "com.jax4j.ops.OpsTest",
+      "name": "com.nablatensor.jax4j.ops.OpsTest",
       "tests": 7,
       "failures": 0,
       "errors": 0,
       "skipped": 1
     },
     {
-      "name": "com.jax4j.tensor.JaxParityTest",
+      "name": "com.nablatensor.jax4j.tensor.JaxParityTest",
       "tests": 1,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     {
-      "name": "com.jax4j.tensor.JitTest",
+      "name": "com.nablatensor.jax4j.tensor.JitTest",
       "tests": 5,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     {
-      "name": "com.jax4j.tensor.TransformsTest",
+      "name": "com.nablatensor.jax4j.tensor.TransformsTest",
       "tests": 21,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     {
-      "name": "com.jax4j.tensor.TreeCloseAllTest",
+      "name": "com.nablatensor.jax4j.tensor.TreeCloseAllTest",
       "tests": 1,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     {
-      "name": "com.jax4j.tensor.VmapTest",
+      "name": "com.nablatensor.jax4j.tensor.VmapTest",
       "tests": 1,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     {
-      "name": "com.jax4j.tensor.tree.TreeUtilTest",
+      "name": "com.nablatensor.jax4j.tensor.tree.TreeUtilTest",
       "tests": 7,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     {
-      "name": "com.jax4j.backend.vulkan.VulkanExecutionTest",
+      "name": "com.nablatensor.jax4j.backend.vulkan.VulkanExecutionTest",
       "tests": 4,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     {
-      "name": "com.jax4j.backend.vulkan.VulkanTensorTest",
+      "name": "com.nablatensor.jax4j.backend.vulkan.VulkanTensorTest",
       "tests": 6,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     {
-      "name": "com.jax4j.backend.vulkan.VulkanTransformsTest",
+      "name": "com.nablatensor.jax4j.backend.vulkan.VulkanTransformsTest",
       "tests": 21,
       "failures": 0,
       "errors": 0,

@@ -1,7 +1,13 @@
 # GPU implementation status
 
+Version 0.2.1 migrates all Java packages to `com.nablatensor.jax4j`.
+Vulkan and wgpu hardware suites were rerun on 2026-10-19. CUDA could not be
+rerun: the local host has no CUDA driver and the previously used zbox host
+was unreachable. The CUDA results below describe 0.2.0; CUDA, ROCm and SIMD
+execution remain unverified for 0.2.1.
+
 Validated on 2026-10-18 with Java 25.0.1. The active Maven coordinates use
-`com.nablatensor`; the parent artifact is `jax4j`. Java packages use `com.jax4j`.
+`com.nablatensor`; the parent artifact is `jax4j`. Java packages use `com.nablatensor.jax4j`.
 
 ## wgpu extension
 
@@ -108,7 +114,7 @@ implemented; its setup, contracts and limits are documented separately.
 
 ## Maven migration
 
-All artifacts below use group `com.nablatensor` and version `0.2.0` (GitHub and Maven Central).
+All artifacts below use group `com.nablatensor` and version `0.2.1`. Java packages use `com.nablatensor.jax4j`.
 
 | Previous artifacts | Destination |
 | --- | --- |

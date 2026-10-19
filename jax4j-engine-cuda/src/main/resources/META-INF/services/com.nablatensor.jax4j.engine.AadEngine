@@ -1,0 +1,3 @@
+com.nablatensor.jax4j.engine.CudaAadEngine
+com.nablatensor.jax4j.engine.CudaInterpEngine
+com.nablatensor.jax4j.engine.CudaEagerEngine

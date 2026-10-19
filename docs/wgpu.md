@@ -30,7 +30,7 @@ A diagnostic is available after compilation:
 ```sh
 java --enable-native-access=ALL-UNNAMED \
   -cp jax4j-core/target/classes:jax4j-engine-wgpu/target/classes \
-  com.jax4j.backend.wgpu.WgpuInfo
+  com.nablatensor.jax4j.backend.wgpu.WgpuInfo
 ```
 
 ## Architecture and contracts
@@ -106,7 +106,7 @@ Reproduce after building:
 ```sh
 java --enable-native-access=ALL-UNNAMED \
   -cp jax4j-core/target/classes:jax4j-engine-vulkan/target/classes:jax4j-engine-wgpu/target/classes \
-  com.jax4j.tensor.bench.GpuComparison
+  com.nablatensor.jax4j.tensor.bench.GpuComparison
 ```
 
 Properties `size`, `matrix`, `scanLength`, `warmup`, `samples`, and `iterations`
