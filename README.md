@@ -12,11 +12,12 @@ Release maintainers: see [the release guide](docs/releasing.md).
 [JAX4J 0.2.1](https://github.com/nablatensor-dev/jax4j/releases/tag/v0.2.1)
 provides seven module JARs and SHA-256 checksums. Build/install from the tag with
 `mvn -Pcuda,rocm,examples,simd install`. CUDA tensor and scalar replay validation
-is described below. Version 0.2.1 is also published to Maven Central.
+is described below. Maven Central publication for 0.2.1 has been submitted and is pending; see
+[release status](docs/release-0.2.1.md).
 
 ## Maven Central
 
-JAX4J 0.2.1 is published under `com.nablatensor` on
+JAX4J 0.2.1 uses `com.nablatensor`; publication is pending on
 [Maven Central](https://central.sonatype.com/artifact/com.nablatensor/jax4j-core/0.2.1).
 
 ```xml
@@ -34,8 +35,9 @@ JAX4J 0.2.1 is published under `com.nablatensor` on
 ```
 
 Use `jax4j-engine-wgpu` for wgpu-native. The parent artifact `jax4j` is a POM.
-CUDA, ROCm and SIMD artifacts are also available. Version 0.2.1 validated Vulkan and wgpu hardware; CUDA, ROCm and SIMD
-execution remain unverified for this version. The Maven
+CUDA, ROCm and SIMD artifacts are included in the GitHub release.
+Version 0.2.1 validated Vulkan and wgpu hardware; CUDA, ROCm and SIMD
+execution remain unverified for this version. The submitted Maven
 Central binary JARs match the GitHub v0.2.1 release assets byte for byte. Finance APIs are maintained separately in
 [NablaTensor Quant](https://github.com/nablatensor-dev/quant).
 

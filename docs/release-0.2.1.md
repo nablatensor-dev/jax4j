@@ -11,3 +11,20 @@ JAX4J 0.2.1 corrects the Java namespace to `com.nablatensor.jax4j` across every 
 Build from the tag with `mvn -Pcuda,rocm,examples,simd clean verify`. Applications normally depend on `com.nablatensor:jax4j-core:0.2.1` plus the desired engine modules; the parent `jax4j` artifact is a POM. Examples are GitHub-only. SHA256SUMS covers all seven binary JARs.
 
 Generate signed source/Javadoc artifacts with `mvn -Pcuda,rocm,simd,central-artifacts verify`. The committed publication profile preserves GPG signing and uses JDK 25 `--no-fonts`.
+
+## Publication status
+
+GitHub release `v0.2.1` is published at commit
+`f78ce4396533e203647e6ededdaf425c6f907c98`. All seven downloaded binary
+assets passed SHA-256 verification.
+
+Central validated all seven library/parent coordinates and accepted the publish
+request. Deployment `106d2fb4-948d-4fd5-8ade-a300144134cf` remains in
+`PUBLISHING` as of 2026-10-19; public artifact URLs still return 404. Validation
+reported the organization monthly release-size quota exceeded, with reset on
+2026-11-01. Publication also reports `Deployment components info not found`.
+Central availability is not confirmed. Inspect the existing deployment before
+attempting any further upload; do not create duplicate deployments.
+
+Signed bundle SHA-256:
+`8ea5eaa8aa4ae38bf6f489e0335e858b8832ccfe199360590f022e34234ea7c6`.
