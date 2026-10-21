@@ -59,16 +59,14 @@ queue completion.
 
 The current numerical contract is F32 on device 0. Shared-key random generation
 has the same deterministic project stream as CPU/Vulkan. The existing
-[P0/P1 restrictions](p0-p1-transforms.md), including serial structured-region
+[transformation restrictions](transforms.md), including serial structured-region
 lowering and static expansion for higher-order scans, also apply to wgpu.
 
 ## Validation
 
 The final clean isolated build recorded **118 passed, 1 existing CPU test skipped**:
 31 Vulkan tests, 36 wgpu tests, and 52 core cases including the skip. The exact
-source snapshot was checked against the workspace. See
-[the validation record](wgpu-validation.json) for commands, suite totals,
-source checksum, native version and library SHA-256.
+source snapshot was checked against the workspace.
 
 The wgpu checks include the same JAX parity/transformation/queue tests as Vulkan,
 plus multi-workgroup reductions at 257/65,536/262,144 elements, nonuniform tiled
@@ -98,8 +96,7 @@ and zero new shader compilations. Primary numerical outputs were checked before
 timing. Cold function times are separate and exclude runtime/device and static
 kernel initialization. These measurements describe this run on this GPU; they
 are not a cross-device performance claim. Both scan implementations currently use
-serial device regions. Raw timings, allocation/dispatch counts and cold times are
-in [the benchmark JSON](wgpu-vulkan-benchmark.json).
+serial device regions.
 
 Reproduce after building:
 
@@ -110,6 +107,4 @@ java --enable-native-access=ALL-UNNAMED \
 ```
 
 Properties `size`, `matrix`, `scanLength`, `warmup`, `samples`, and `iterations`
-control the comparison. Initial source/runtime provenance is recorded in
-`migration-manifest.json`; the prior consolidation/P0/P1 work was committed as
-`21ac4c9` before this backend was added.
+control the comparison.

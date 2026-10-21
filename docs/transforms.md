@@ -1,4 +1,4 @@
-# P0/P1 tensor transformations
+# Tensor transformations
 
 The tensor transformation implementation targets CPU, Vulkan and wgpu-native F32 execution.
 See [wgpu setup and hardware validation](wgpu.md) for the additional backend.
@@ -111,4 +111,3 @@ and carry gradients, and three functional Adam steps. Both CPU and explicitly
 enabled Vulkan tests compare against it. Additional Vulkan checks cover zero
 host transfers in cached scans and reverse scans, dispatch counts independent of
 scan length, native allocation cleanup, and concurrent calls/early release.
-See `vulkan-p0-p1-validation.json` for the recorded run.

@@ -4,3 +4,10 @@ __pycache__/
 *.pyc
 runs/
 .native/
+TODO.txt
+
+# Local documentation archives and generated reports
+/docs/*
+!/docs/transforms.md
+!/docs/wgpu.md
+!/docs/releasing.md

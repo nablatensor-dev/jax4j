@@ -1,7 +1,0 @@
-{"device":"AMD Radeon Graphics (RADV PHOENIX)","dtype":"F32","elements":262144,"iterations":20,
- "chainOperations":36,"coldCaptureAndCompileMs":25.656729,
- "fusedMs":0.546536,"eagerMs":4.552110,
- "fusedDispatches":20,"eagerDispatches":720,
- "fusedAllocations":20,"eagerAllocations":720,
- "fusedHostToDeviceBytes":0,"fusedDeviceToHostBytes":0,
- "peakDeviceBytes":38797312,"numericalTolerance":0.00003}

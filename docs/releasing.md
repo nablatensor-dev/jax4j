@@ -41,10 +41,9 @@ mvn -Pcuda,rocm,examples,simd versions:set \
   -DprocessAllModules=true -DgenerateBackupPoms=false
 ```
 
-Check every POM's project/parent version, the coordinates in `README.md`, and the
-current-version statement in `docs/implementation-status.md`. Preserve historical
-upstream versions in source-provenance records. Review the release notes against
-[implementation status](implementation-status.md) and the validation results.
+Check every POM's project/parent version and the coordinates in `README.md`.
+Review the release notes against the documented API limitations and validation
+results.
 
 ## Build and validate
 
@@ -193,3 +192,93 @@ Central deployment: `53d6d608-6c4e-4a2e-abda-1dac2b8d51c3`. The signed bundle
 SHA-256 is `ca1582deac2e74f92399ff25477baea484da7943fda173d79d0c39561dae7847`.
 Hardware validation passed 23 CUDA, 31 Vulkan and 36 wgpu checks. ROCm and SIMD
 execution remain unverified.
+
+## Reduced packaging for future Central releases
+
+Keep the binary JAR, POM, sources JAR and Javadoc JAR for each library module.
+For each of those four payload files, include its GPG `.asc` signature and only
+its `.md5` and `.sha1` checksum files. A library module therefore contributes
+16 files. A parent, relocation or retirement POM contributes four files: the
+POM, its signature and its two checksums. Do not generate checksums for `.asc`
+files or signatures for checksum files.
+
+Central requires sources/Javadoc for library JARs and POM metadata for dependency
+resolution. Do not remove those files to reduce usage. SHA-256 and SHA-512
+checksum sidecars are optional; omit them from the Central upload. Preserve
+SHA-256 for the bundle manifest and GitHub `SHA256SUMS` assets: those are separate
+integrity records and need not be included in the Central bundle.
+
+Reference: [Central publishing requirements](https://central.sonatype.org/publish/requirements/).
+
+Use a fresh staging directory and inspect the completed ZIP before upload.
+Count file entries, excluding directory entries; inspect the artifact/version
+list and file suffixes. Confirm there are no `.sha256`, `.sha512`, `.asc.md5` or
+`.asc.sha1` sidecars, examples, test reports, native installation archives or
+unrequested migration artifacts. Review discrepancies against the counts below
+before uploading. Bundling all modules into one ZIP does not reduce the count:
+each file inside the upload counts individually. Files inside a library or
+Javadoc JAR are not counted separately.
+
+Generate Javadoc with `--no-fonts` as described below. This reduces uploaded
+bytes, not file count. Apply packaging changes only to new releases; preserve
+published versions, existing migration POMs and release tags.
+
+### JAX4J publication scope and tooling
+
+Publish the `jax4j` parent POM and six library modules: `jax4j-core`,
+`jax4j-engine-cuda`, `jax4j-engine-rocm`, `jax4j-engine-vulkan`,
+`jax4j-engine-wgpu` and `jax4j-simd`. With reduced checksums, this is
+**100 files** per full release: six modules at 16 files plus one parent at four.
+`jax4j-examples` remains GitHub-only. Keep the separate GPU engines optional for
+consumers; combining them solely to save publishing files is unnecessary.
+
+Generate the signed artifacts with the committed publication profile, using the
+new release version already set in the POMs:
+
+```sh
+mvn -Pcuda,rocm,simd,central-artifacts verify
+```
+
+The profile produces signed artifacts; the bundle assembly step determines
+which checksum sidecars are uploaded. Ensure any isolated publication script or
+copy of Quant's assembler uses only `md5` and `sha1` for Central payloads. The
+shared assembler currently generates all four checksum algorithms and adds
+Quant migration artifacts unconditionally; update it according to
+[Quant's reduced packaging instructions](https://github.com/nablatensor-dev/quant/blob/main/docs/releasing.md#reduced-packaging-for-future-central-releases)
+before using it for future reduced bundles. Its `--jax4j-tree` option includes
+Quant as well; it is not a standalone JAX4J publisher. A JAX4J-only release must
+contain only the seven coordinates listed above.
+
+Do not attach Quant migration/retirement notices to routine JAX4J releases or
+republish unchanged Quant versions. A new combined release containing the four
+Quant libraries, both parents and the six JAX4J libraries has **168 files** when
+migration notices are omitted. Both projects share the organization's monthly
+quota even when uploaded separately.
+
+## Javadoc size: omit bundled fonts
+
+For future releases, generate Javadoc with JDK 25's `--no-fonts` option. Add it
+to the `maven-javadoc-plugin` configuration used for publication:
+
+```xml
+<configuration>
+  <additionalOptions>
+    <additionalOption>--no-fonts</additionalOption>
+  </additionalOptions>
+</configuration>
+```
+
+Merge this into the existing configuration and preserve other required options
+(such as `--add-modules jdk.incubator.vector` for JAX4J SIMD). Apply it to every
+publication profile, including `release` and `central-artifacts` where present,
+and to any isolated publication POM generated from a release tag.
+
+The 2026-10-18 usage review matched 90.75 MB across 822 published files. Twenty
+Javadoc JARs each bundled the same 25 font files, approximately 4.04 MB per JAR:
+80.81 MB of duplicated fonts, about 89% of the total. Omitting those fonts would
+reduce that payload to roughly 9.94 MB while keeping API documentation.
+
+Before signing, inspect each generated `*-javadoc.jar` and verify that it has
+API HTML pages and no `resource-files/fonts/` entries. Generate and inspect a
+fresh Javadoc JAR rather than reusing an existing one. Apply this change to new
+release versions only; do not replace published Central artifacts or move tags.

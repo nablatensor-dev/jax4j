@@ -1,23 +1,76 @@
 # JAX4J
 
+[Website](https://nablatensor.com/)
+
 Java 25 tensors, automatic differentiation and neural networks under
 `com.nablatensor:jax4j:0.2.1`. The fluent Tensor API supports fused
 CPU, CUDA, Vulkan and wgpu-native execution. There are no dependencies on SonicTensor,
 NablaTensor or TensorJIT JARs.
 
-Release maintainers: see [the release guide](docs/releasing.md).
+**Java. Differentiated.** Tensors → autodiff → JIT → gradient descent, live in JShell.
+
+[![JAX4J in JShell: colorful live demo of tensors, automatic differentiation, JIT replay and gradient descent](demo/jax4j.gif)](demo/README.md)
+
+## Hello, JAX4J! A little calculus, hold the pencil.
+
+A common task in machine learning: measure an error and find which way to move
+to reduce it. Here, the loss is the mean of the squared errors; JAX4J works out
+the gradient for you.
+
+```java
+import com.nablatensor.jax4j.tensor.Tensor;
+import com.nablatensor.jax4j.tensor.Tensors;
+import com.nablatensor.jax4j.tensor.Transforms;
+import java.util.Arrays;
+
+try (var errors = Tensors.array(new float[] {1, 2, 3, 4})) {
+    var result = Transforms.valueAndGrad(x -> x.mul(x).mean(), errors);
+    try (Tensor loss = result.value(); Tensor gradient = result.grad()) {
+        System.out.println("Loss: " + loss.toFloatArray()[0]);
+        System.out.println("Gradient: " + Arrays.toString(gradient.toFloatArray()));
+    }
+}
+// Loss: 7.5
+// Gradient: [0.5, 1.0, 1.5, 2.0]
+```
+
+`mul(x).mean()` squares each error and averages the results. The gradient tells
+us how each error affects the loss: take a small step in the opposite direction
+to bring it down. Same Java expression, automatic derivatives. Runs on CPU with
+just `jax4j-core`; no GPU required.
+
+For JIT compilation, batching and more, see the
+[transformation guide](docs/transforms.md).
+
+## Why JAX4J exists
+
+JAX4J grew out of earlier automatic differentiation work in the
+SonicTensor/NablaTensor lineage, incorporating TensorJIT CPU and autodiff sources.
+It brings that foundation into a self-contained Java tensor and neural-network
+library, motivated by three practical frustrations:
+
+- **Fewer options in Java.** Python has a rich ecosystem for tensors, automatic
+  differentiation and machine learning. Java developers have far fewer choices;
+  JAX4J aims to make these capabilities available directly on the JVM.
+- **Large Python environments.** Python machine-learning dependencies installed
+  in project-local `.venv` directories can consume gigabytes of disk space,
+  especially when repeated across projects. A Java library with optional GPU
+  backends offers a more compact way to get started.
+- **Overlooked integrated GPUs.** GPU support in existing tools often leaves AMD
+  integrated GPUs underserved. Modern AMD machines are particularly appealing
+  development systems: advanced chip fabrication helps deliver excellent power
+  efficiency and quiet operation. Making useful compute available on their
+  integrated GPUs through Vulkan and wgpu is a central motivation for JAX4J.
 
 ## Releases
 
 [JAX4J 0.2.1](https://github.com/nablatensor-dev/jax4j/releases/tag/v0.2.1)
-provides seven module JARs and SHA-256 checksums. Build/install from the tag with
-`mvn -Pcuda,rocm,examples,simd install`. CUDA tensor and scalar replay validation
-is described below. Maven Central publication for 0.2.1 has been submitted and is pending; see
-[release status](docs/release-0.2.1.md).
+is published on Maven Central. Module JARs and checksums are also available
+in the GitHub release.
 
 ## Maven Central
 
-JAX4J 0.2.1 uses `com.nablatensor`; publication is pending on
+JAX4J 0.2.1 is available under `com.nablatensor` on
 [Maven Central](https://central.sonatype.com/artifact/com.nablatensor/jax4j-core/0.2.1).
 
 ```xml
@@ -37,15 +90,14 @@ JAX4J 0.2.1 uses `com.nablatensor`; publication is pending on
 Use `jax4j-engine-wgpu` for wgpu-native. The parent artifact `jax4j` is a POM.
 CUDA, ROCm and SIMD artifacts are included in the GitHub release.
 Version 0.2.1 validated Vulkan and wgpu hardware; CUDA, ROCm and SIMD
-execution remain unverified for this version. The submitted Maven
-Central binary JARs match the GitHub v0.2.1 release assets byte for byte. Finance APIs are maintained separately in
+execution remain unverified for this version. Finance APIs are maintained separately in
 [NablaTensor Quant](https://github.com/nablatensor-dev/quant).
 
 ## Build and validate
 
+Requires JDK 25+ and Maven.
+
 ```sh
-export JAVA_HOME=/opt/zulu25.30.17-ca-jdk25.0.1-linux_x64
-export PATH="$JAVA_HOME/bin:$PATH"
 mvn test
 mvn -Pcuda -Djax4j.cuda.tests=true test
 mvn -Djax4j.vulkan.tests=true test
@@ -69,75 +121,11 @@ failure. CPU tests never need a GPU. Native execution uses Java FFM with
 Version 0.2.1 corrects the Java package namespace. Update imports when upgrading from earlier releases.
 Java packages use `com.nablatensor.jax4j`; tensor factories are available through `Tensors`.
 Select a default backend with `-Djax4j.tensor.backend=cpu` or `JAX4J_BACKEND=cpu`.
-The scalar API uses `Nabla.Evaluator` / `TypedEvaluator`, `Evaluation` /
-`TypedEvaluation`, `valueOnly()`, `value()`, `gradient()` and `gradients()`.
 
-Core, Vulkan and wgpu form the default reactor. CUDA and ROCm each combine their
-tensor runtime and scalar replay engine in one module. Build them with `-Pcuda`
-and `-Procm`, or both with `-Pcuda,rocm`. CUDA tensor execution was validated on
-`zbox` (GeForce GTX 1060, driver 580.178.04, NVRTC 12) with Java 25 on
-2026-10-18. Opt-in CUDA tests cover arithmetic/reduction, device fill, matrix
-multiplication, JIT replay and compiled tensor gradients; unavailable CUDA fails
-these tests when enabled. Scalar replay tests also validate `cuda`, `cuda-interp`
-and `cuda-eager` in FP32/FP64, with and without adjoints, updated inputs, and
-normal random draws against CPU results (18 scalar checks, 5 tensor checks).
-ROCm hardware remains unverified. CUDA scalar replay still rejects multi-output
-tapes, uniform draws and named random streams.
-SIMD scalar replay remains optional under `-Psimd`.
+Core, Vulkan and wgpu build by default. Enable optional backends with
+`-Pcuda`, `-Procm` or `-Psimd`; combine profiles as needed.
+ROCm hardware remains unverified. CUDA scalar replay does not yet support
+multi-output tapes, uniform draws or named random streams.
 
 For native installation, API usage, validation and measured speed comparisons,
 see [wgpu support](docs/wgpu.md).
-
-## Fused computation
-
-```java
-var function = Jit.compile(x -> x.mul(x).add(3).tanh());
-try (Tensor output = function.apply(input)) {
-    output.blockUntilReady();
-}
-```
-
-The first call captures the pure Java function. Calls with the same backend,
-shape, dtype and device replay the captured kernels with new runtime values.
-Host reads inside compiled functions fail explicitly. Java side effects and
-scalar constants are evaluated during capture; closed-over tensors must stay alive.
-Use `Jit.compileTree` for dynamic Tensor parameter trees and structured outputs,
-including `AutoDiff.ValueAndGrad`. Use multi-input `Jit.apply` to capture all
-parameters of a layer or update.
-
-`Transforms` provides tensor gradients, JVP/VJP, Jacobians, Hessians, structured
-parameter gradients and nested differentiation. `Vmap.apply` supports arbitrary
-axes and multiple mapped/shared inputs; `Vmap.applyTree` preserves structured
-outputs. Compose these with `Jit.compile`/`compileTree` for cached execution.
-
-`ControlFlow` provides device conditional, while and scan regions, including
-structured state. `CustomDerivative` supplies custom JVP/VJP and recomputation
-checkpoints. Dynamic while loops support forward mode; reverse mode is rejected.
-
-Use `FunctionalAdam` with explicit moment trees and a Tensor step counter inside
-compiled training functions. The mutable `Adam` remains available outside tracing.
-Vulkan defers buffer frees until pending commands finish.
-
-See [P0/P1 APIs, restrictions and validation](docs/p0-p1-transforms.md). Tensor
-execution is F32. Device regions currently use serial shader lowering; optimized
-parallel regions and broad performance budgets remain future work.
-
-## Reproduction and provenance
-
-- [Roadmap and implementation status](docs/gpu-jax-roadmap.md)
-- [Maven migration and validation](docs/implementation-status.md)
-- [Original source provenance](docs/ecosystem-and-migration.md)
-- [Per-file import manifest](docs/migration-manifest.json)
-- [Mechanical source moves](docs/module-moves.json)
-
-`python/jax_parity.py` regenerates checked-in fixtures with JAX **0.11.2**, forced
-to CPU. Java parity tests use the fixtures without requiring Python.
-
-For synchronized Vulkan timing and dispatch/allocation/transfer counts:
-
-```sh
-mvn -DskipTests package
-java --enable-native-access=ALL-UNNAMED \
-  -cp jax4j-core/target/classes:jax4j-engine-vulkan/target/classes \
-  com.nablatensor.jax4j.backend.vulkan.VulkanBenchmark
-```
