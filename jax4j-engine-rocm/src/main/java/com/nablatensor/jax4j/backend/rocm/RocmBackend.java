@@ -86,6 +86,9 @@ public final class RocmBackend implements ComputeBackend {
           case 6: r = 1.0f / (1.0f + expf(-x)); break;
           case 7: r = isnan(x) ? x : fmaxf(0.0f, x); break;
           case 8: r = fabsf(x); break;
+          case 10: r = log1pf(x); break;
+          case 11: r = expm1f(x); break;
+          case 12: r = fmaxf(x,0.0f)+log1pf(expf(-fabsf(x))); break;
           case 9: r = x > 0.0f ? 1.0f : (x < 0.0f ? -1.0f : 0.0f); break;
         }
         out[i] = r;
@@ -885,6 +888,9 @@ public final class RocmBackend implements ComputeBackend {
   private static String unaryExpr(Op op, String x) {
     return switch (op) {
       case NEG -> "(-" + x + ")";
+      case LOG1P -> "log1pf(" + x + ")";
+      case EXPM1 -> "expm1f(" + x + ")";
+      case SOFTPLUS -> "(fmaxf(" + x + ",0.0f)+log1pf(expf(-fabsf(" + x + "))))";
       case EXP -> "expf(" + x + ")";
       case LOG -> "logf(" + x + ")";
       case SQRT -> "sqrtf(" + x + ")";
@@ -1082,6 +1088,9 @@ public final class RocmBackend implements ComputeBackend {
       case RELU -> 7;
       case ABS -> 8;
       case SIGN -> 9;
+      case LOG1P -> 10;
+      case EXPM1 -> 11;
+      case SOFTPLUS -> 12;
       default -> throw new IllegalArgumentException("not a unary op: " + op);
     };
   }

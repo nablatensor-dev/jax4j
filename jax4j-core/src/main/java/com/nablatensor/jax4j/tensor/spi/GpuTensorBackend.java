@@ -113,6 +113,12 @@ public abstract class GpuTensorBackend implements ComputeBackend {
               case 6u: r = 1.0 / (1.0 + exp(-x)); break;
               case 7u: r = isnan(x) ? x : max(0.0, x); break;
               case 8u: r = abs(x); break;
+              case 10u: r = """ + com.nablatensor.jax4j.tensor.StableMath.log1p("x") + """
+                  ; break;
+              case 11u: r = """ + com.nablatensor.jax4j.tensor.StableMath.expm1("x") + """
+                  ; break;
+              case 12u: r = """ + com.nablatensor.jax4j.tensor.StableMath.softplus("x") + """
+                  ; break;
               case 9u: r = x > 0.0 ? 1.0 : (x < 0.0 ? -1.0 : 0.0); break;
             }
             o[i] = r;
@@ -1034,6 +1040,9 @@ public abstract class GpuTensorBackend implements ComputeBackend {
   private static String glslUnary(Op op, String x) {
     return switch (op) {
       case NEG -> "(-" + x + ")";
+      case LOG1P -> com.nablatensor.jax4j.tensor.StableMath.log1p(x);
+      case EXPM1 -> com.nablatensor.jax4j.tensor.StableMath.expm1(x);
+      case SOFTPLUS -> com.nablatensor.jax4j.tensor.StableMath.softplus(x);
       case EXP -> "exp(" + x + ")";
       case LOG -> "log(" + x + ")";
       case SQRT -> "sqrt(" + x + ")";
@@ -1655,6 +1664,9 @@ public abstract class GpuTensorBackend implements ComputeBackend {
       case RELU -> 7;
       case ABS -> 8;
       case SIGN -> 9;
+      case LOG1P -> 10;
+      case EXPM1 -> 11;
+      case SOFTPLUS -> 12;
       default -> throw new IllegalArgumentException("not a unary op: " + op);
     };
   }

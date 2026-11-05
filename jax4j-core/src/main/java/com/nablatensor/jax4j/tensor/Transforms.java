@@ -566,6 +566,9 @@ public final class Transforms {
                   case NEG -> a.fullLike(-1);
                   case EXP -> y;
                   case LOG -> a.fullLike(1).div(a);
+                  case LOG1P -> a.fullLike(1).div(a.add(1));
+                  case EXPM1 -> a.exp();
+                  case SOFTPLUS -> a.sigmoid();
                   case SQRT -> a.fullLike(1).div(y.mul(2));
                   case RSQRT -> y.mul(y).mul(y).mul(-.5);
                   case TANH -> y.mul(y).neg().add(1);
@@ -587,7 +590,7 @@ public final class Transforms {
                 g -> g.reindex(a.shape(), (int[]) args[2]));
         case "transpose" -> linear(Tensor::transpose, Tensor::transpose);
         case "broadcastTo" -> linear(t -> t.broadcastTo(y.shape()), g -> reduceTo(g, a.shape()));
-        case "reduceSum" -> linear(Tensor::sum, g -> g.broadcastTo(a.shape()));
+        case "reduceSum" -> linear(Tensor::sum, g -> a.shape().rank() == 0 ? g.reshape() : g.broadcastTo(a.shape()));
         case "sumAxis0", "sumAxis" -> {
           int axis = name.equals("sumAxis0") ? 0 : (int) args[1];
           boolean keep = args.length > 2 && (boolean) args[2];

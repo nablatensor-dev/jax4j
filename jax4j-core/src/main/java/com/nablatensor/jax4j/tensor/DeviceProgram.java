@@ -1299,7 +1299,10 @@ public final class DeviceProgram {
     static String unary(Op op, String x) {
       return switch (op) {
         case NEG -> "(-" + x + ")";
-        case EXP -> "exp(" + x + ")";
+        case LOG1P -> com.nablatensor.jax4j.tensor.StableMath.log1p(x);
+      case EXPM1 -> com.nablatensor.jax4j.tensor.StableMath.expm1(x);
+      case SOFTPLUS -> com.nablatensor.jax4j.tensor.StableMath.softplus(x);
+      case EXP -> "exp(" + x + ")";
         case LOG -> "log(" + x + ")";
         case SQRT -> "sqrt(" + x + ")";
         case RSQRT -> "inversesqrt(" + x + ")";

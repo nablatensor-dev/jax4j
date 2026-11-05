@@ -74,8 +74,69 @@ public final class Tensors {
   }
 
   public static Tensor zeros(int... dims) {
-    Shape shape = Shape.of(dims);
-    return arrayOn(new float[(int) shape.size()], shape, defaultDevice());
+    return full(0, dims);
+  }
+
+  /** Creates an F32 constant on the default device. */
+  public static Tensor full(float value, int... dims) {
+    return full(defaultDevice(), value, dims);
+  }
+
+  /** Creates an F32 constant using the device backend's fill implementation. */
+  public static Tensor full(Device device, float value, int... dims) {
+    ComputeBackend backend = BackendRegistry.forDevice(device);
+    return new Tensor(backend, backend.full(value, Shape.of(dims), DType.F32, device));
+  }
+
+  public static Tensor ones(int... dims) { return full(1, dims); }
+  public static Tensor ones(Device device, int... dims) { return full(device, 1, dims); }
+  public static Tensor zeros(Device device, int... dims) { return full(device, 0, dims); }
+
+  /** F32 sequence, including start and excluding stop. Values are generated on the host
+   * and uploaded once to the requested device. Length is computed in double precision.
+   * This is an eager constructor; create inputs outside compiled functions. */
+  public static Tensor arange(double stop) { return arange(0, stop, 1); }
+  public static Tensor arange(double start, double stop) { return arange(start, stop, 1); }
+  public static Tensor arange(double start, double stop, double step) {
+    return arange(defaultDevice(), start, stop, step);
+  }
+  public static Tensor arange(Device device, double stop) { return arange(device, 0, stop, 1); }
+  public static Tensor arange(Device device, double start, double stop) {
+    return arange(device, start, stop, 1);
+  }
+  public static Tensor arange(Device device, double start, double stop, double step) {
+    if (!Double.isFinite(start) || !Double.isFinite(stop) || !Double.isFinite(step) || step == 0)
+      throw new IllegalArgumentException("arange requires finite bounds and a finite nonzero step");
+    double count = Math.max(0, Math.ceil((stop - start) / step));
+    if (!Double.isFinite(count) || count > Integer.MAX_VALUE)
+      throw new IllegalArgumentException("arange result is too large");
+    float[] values = new float[(int) count];
+    for (int i = 0; i < values.length; i++) values[i] = (float) (start + i * step);
+    return arrayOn(values, Shape.of(values.length), device);
+  }
+
+  /** F32 evenly spaced samples including both endpoints. */
+  public static Tensor linspace(double start, double stop, int count) {
+    return linspace(defaultDevice(), start, stop, count, true);
+  }
+  public static Tensor linspace(double start, double stop, int count, boolean endpoint) {
+    return linspace(defaultDevice(), start, stop, count, endpoint);
+  }
+  public static Tensor linspace(Device device, double start, double stop, int count) {
+    return linspace(device, start, stop, count, true);
+  }
+  /** Eager host-generated samples, uploaded once; count zero is empty and count one is start. */
+  public static Tensor linspace(Device device, double start, double stop, int count, boolean endpoint) {
+    if (!Double.isFinite(start) || !Double.isFinite(stop) || count < 0)
+      throw new IllegalArgumentException("linspace requires finite bounds and nonnegative count");
+    float[] values = new float[count];
+    double denominator = endpoint ? count - 1.0 : count;
+    for (int i = 0; i < count; i++) {
+      double t = count == 1 ? 0 : i / denominator;
+      values[i] = (float) ((1 - t) * start + t * stop);
+    }
+    if (endpoint && count > 1) values[count - 1] = (float) stop;
+    return arrayOn(values, Shape.of(count), device);
   }
 
   public static Tensor randn(int... dims) {

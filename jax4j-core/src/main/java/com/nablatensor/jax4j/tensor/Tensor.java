@@ -107,6 +107,12 @@ public final class Tensor implements AutoCloseable {
     return wrap(backend.full(value, shape(), dtype(), device()));
   }
 
+  /** Constant zero preserving shape, dtype, device and tracing context. */
+  public Tensor zerosLike() { return fullLike(0); }
+
+  /** Constant one preserving shape, dtype, device and tracing context. */
+  public Tensor onesLike() { return fullLike(1); }
+
   public Tensor f32() {
     return dtype(DType.F32);
   }
@@ -209,6 +215,18 @@ public final class Tensor implements AutoCloseable {
   public Tensor neg() {
     return wrap(backend.unary(Op.NEG, buffer));
   }
+
+  /** Elementwise square. */
+  public Tensor square() { return mul(this); }
+
+  /** Accurate log(1+x), including values of x close to zero. */
+  public Tensor log1p() { return wrap(backend.unary(Op.LOG1P, buffer)); }
+
+  /** Accurate exp(x)-1, including values of x close to zero. */
+  public Tensor expm1() { return wrap(backend.unary(Op.EXPM1, buffer)); }
+
+  /** Stable log(1+exp(x)). */
+  public Tensor softplus() { return wrap(backend.unary(Op.SOFTPLUS, buffer)); }
 
   public Tensor exp() {
     return wrap(backend.unary(Op.EXP, buffer));
@@ -438,7 +456,78 @@ public final class Tensor implements AutoCloseable {
     }
   }
 
-  /** Maximum over every element, returning a single-element (shape {@code (1)}) tensor. */
+  /** Axis mean, dropping the selected dimension. */
+  public Tensor mean(int axis) { return mean(axis, false); }
+  public Tensor mean(int axis, boolean keepDims) {
+    int normalized = normalizeAxis(axis);
+    try (Tensor total = sum(normalized, keepDims)) {
+      return total.div(shape().dim(normalized));
+    }
+  }
+
+  public Tensor var() { return varianceAll(0); }
+  public Tensor std() { try (Tensor v = var()) { return v.sqrt(); } }
+  public Tensor var(int axis) { return var(axis, 0, false); }
+  public Tensor var(int axis, boolean keepDims) { return var(axis, 0, keepDims); }
+  public Tensor var(int axis, int correction, boolean keepDims) {
+    if (correction < 0) throw new IllegalArgumentException("Negative variance correction");
+    int normalized = normalizeAxis(axis);
+    try (Tensor center = mean(normalized, true);
+         Tensor differences = sub(center);
+         Tensor squares = differences.square();
+         Tensor total = squares.sum(normalized, keepDims)) {
+      int divisor = shape().dim(normalized) - correction;
+      return divisor <= 0 ? total.fullLike(Float.NaN) : total.div(divisor);
+    }
+  }
+  public Tensor std(int axis) { return std(axis, 0, false); }
+  public Tensor std(int axis, boolean keepDims) { return std(axis, 0, keepDims); }
+  public Tensor std(int axis, int correction, boolean keepDims) {
+    try (Tensor variance = var(axis, correction, keepDims)) { return variance.sqrt(); }
+  }
+  private Tensor varianceAll(int correction) {
+    try (Tensor center = mean(); Tensor differences = sub(center);
+         Tensor squares = differences.square(); Tensor total = squares.sum()) {
+      long divisor = shape().size() - correction;
+      return divisor <= 0 ? total.fullLike(Float.NaN) : total.div(divisor);
+    }
+  }
+
+  public Tensor logsumexp() {
+    try (Tensor maximum = max(); Tensor lower = maximum.maximum(-Float.MAX_VALUE);
+         Tensor shift = lower.minimum(Float.MAX_VALUE); Tensor shifted = sub(shift);
+         Tensor e = shifted.exp(); Tensor total = e.sum(); Tensor logged = total.log()) {
+      return logged.add(shift);
+    }
+  }
+  public Tensor logsumexp(int axis) { return logsumexp(axis, false); }
+  public Tensor logsumexp(int axis, boolean keepDims) {
+    int normalized = normalizeAxis(axis);
+    try (Tensor maximum = max(normalized, true);
+         Tensor lower = maximum.maximum(-Float.MAX_VALUE);
+         Tensor shift = lower.minimum(Float.MAX_VALUE); Tensor shifted = sub(shift);
+         Tensor e = shifted.exp(); Tensor total = e.sum(normalized, true);
+         Tensor logged = total.log(); Tensor result = logged.add(shift)) {
+      if (keepDims) return result.reshape(result.shape().dims());
+      int[] dims = new int[shape().rank() - 1];
+      for (int i = 0, j = 0; i < shape().rank(); i++) if (i != normalized) dims[j++] = shape().dim(i);
+      return result.reshape(dims);
+    }
+  }
+  public Tensor softmax(int axis) {
+    try (Tensor maximum = max(axis, true); Tensor shifted = sub(maximum);
+         Tensor e = shifted.exp(); Tensor denominator = e.sum(axis, true)) {
+      return e.div(denominator);
+    }
+  }
+  public Tensor logSoftmax(int axis) {
+    try (Tensor maximum = max(axis, true); Tensor shifted = sub(maximum);
+         Tensor e = shifted.exp(); Tensor total = e.sum(axis, true); Tensor logged = total.log()) {
+      return shifted.sub(logged);
+    }
+  }
+
+  /** Maximum over every element, returning shape {@code (1)}. */
   public Tensor max() {
     return wrap(backend.reduceMax(buffer));
   }

@@ -574,6 +574,7 @@ final class CudaRuntime {
 
   /** Launch a 1-D grid. Arguments are Long (device pointers), Integer, or Float. */
   static void launch(long function, int grid, int block, Object... arguments) {
+    if (grid == 0) return;
     launchShared(function, grid, block, 0, arguments);
   }
 

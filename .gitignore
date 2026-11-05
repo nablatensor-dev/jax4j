@@ -11,3 +11,5 @@ TODO.txt
 !/docs/transforms.md
 !/docs/wgpu.md
 !/docs/releasing.md
+
+!/docs/stable-math.md

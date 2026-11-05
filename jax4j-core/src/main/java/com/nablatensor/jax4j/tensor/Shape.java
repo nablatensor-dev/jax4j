@@ -111,7 +111,7 @@ public record Shape(int[] dims) {
       if (da != db && da != 1 && db != 1) {
         throw new IllegalArgumentException("cannot broadcast shapes " + a + " and " + b);
       }
-      out[i] = Math.max(da, db);
+      out[i] = da == 1 ? db : da;
     }
     return Shape.of(out);
   }

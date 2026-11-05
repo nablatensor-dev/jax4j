@@ -20,5 +20,5 @@ public enum Op {
   // binary elementwise
   ADD, SUB, MUL, DIV, MAX, MIN,
   // unary elementwise
-  NEG, EXP, LOG, SQRT, RSQRT, TANH, SIGMOID, RELU, ABS, SIGN
+  NEG, EXP, LOG, SQRT, RSQRT, TANH, SIGMOID, RELU, ABS, SIGN, LOG1P, EXPM1, SOFTPLUS
 }

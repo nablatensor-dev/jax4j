@@ -64,7 +64,7 @@ final class CudaBuffer implements DeviceBuffer {
     this.storage = null;
     long bytes = shape.size() * dtype.byteSize();
     LIVE_BYTES.addAndGet(bytes);
-    this.cleanable = CLEANER.register(this, new FreeAction(pointer, bytes));
+    this.cleanable = bytes == 0 ? null : CLEANER.register(this, new FreeAction(pointer, bytes));
   }
 
   CudaBuffer(CudaBuffer storage, int elementOffset, int count) {

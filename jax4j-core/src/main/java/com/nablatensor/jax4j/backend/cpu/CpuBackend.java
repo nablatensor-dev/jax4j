@@ -132,6 +132,9 @@ public final class CpuBackend implements ComputeBackend, QuantizedOps {
       case NEG -> {
         for (int i = 0; i < out.length; i++) out[i] = -x[i];
       }
+      case LOG1P, EXPM1, SOFTPLUS -> {
+        for (int i = 0; i < out.length; i++) out[i] = applyUnary(op, x[i]);
+      }
       case EXP -> {
         for (int i = 0; i < out.length; i++) out[i] = (float) Math.exp(x[i]);
       }
@@ -669,6 +672,9 @@ public final class CpuBackend implements ComputeBackend, QuantizedOps {
   private static float applyUnary(Op op, float x) {
     return switch (op) {
       case NEG -> -x;
+      case LOG1P -> (float) Math.log1p(x);
+      case EXPM1 -> (float) Math.expm1(x);
+      case SOFTPLUS -> (float) (Math.max(x, 0) + Math.log1p(Math.exp(-Math.abs(x))));
       case EXP -> (float) Math.exp(x);
       case LOG -> (float) Math.log(x);
       case SQRT -> (float) Math.sqrt(x);
@@ -677,6 +683,7 @@ public final class CpuBackend implements ComputeBackend, QuantizedOps {
       case SIGMOID -> (float) (1.0 / (1.0 + Math.exp(-x)));
       case RELU -> Math.max(0.0f, x);
       case ABS -> Math.abs(x);
+      case SIGN -> x > 0 ? 1 : x < 0 ? -1 : 0;
       default -> throw new IllegalArgumentException("not a unary op: " + op);
     };
   }
