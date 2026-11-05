@@ -1114,6 +1114,7 @@ public final class DeviceProgram {
       DeviceBuffer x = a.length > 0 && a[0] instanceof DeviceBuffer b ? b : null;
       return switch (name) {
         case "program" -> ((DeviceProgram) a[0]).outputShape();
+        case "arrayKernel" -> ((ArrayKernel) a[0]).output();
         case "upload", "full" -> (Shape) a[1];
         case "randomUniform", "randomNormal" -> (Shape) a[2];
         case "unary", "scalar", "binary" -> ((DeviceBuffer) a[1]).shape();
@@ -1277,6 +1278,9 @@ public final class DeviceProgram {
               ((DeviceProgram) instruction.args[0])
                   .asFunction(
                       name + "op" + instruction.output.id, (DeviceBuffer[]) instruction.args[1]));
+      for(Instruction instruction:instructions)
+        if(instruction.method.getName().equals("arrayKernel"))
+          src.append(((ArrayKernel)instruction.args[0]).asFunction(name+"op"+instruction.output.id));
       if (instructions.stream().anyMatch(op -> op.method.getName().startsWith("random")))
         src.append(randomHelpers(name));
       src.append("void ").append(name).append('(');
@@ -1311,7 +1315,7 @@ public final class DeviceProgram {
         case RELU -> "max(" + x + ",0.)";
         case ABS -> "abs(" + x + ")";
         case SIGN -> "sign(" + x + ")";
-        default -> throw new IllegalArgumentException("unary");
+        default -> com.nablatensor.jax4j.tensor.Elementwise.unarySource(op, x);
       };
     }
 
@@ -1323,7 +1327,7 @@ public final class DeviceProgram {
         case DIV -> "(" + a + "/" + b + ")";
         case MAX -> "max(" + a + "," + b + ")";
         case MIN -> "min(" + a + "," + b + ")";
-        default -> throw new IllegalArgumentException("binary");
+        default -> com.nablatensor.jax4j.tensor.Elementwise.binarySource(op, a, b);
       };
     }
 
@@ -1348,6 +1352,11 @@ public final class DeviceProgram {
             .append(String.join(",", args))
             .append(");");
         return;
+      }
+      if(name.equals("arrayKernel")) {
+        s.append(prefix).append("op").append(instruction.output.id).append('(').append(out);
+        for(DeviceBuffer input:(DeviceBuffer[])a[1])s.append(',').append(ref(input));
+        s.append(");");return;
       }
       if (name.equals("stackAxis0")) {
         Symbol[] inputs = (Symbol[]) a[0];

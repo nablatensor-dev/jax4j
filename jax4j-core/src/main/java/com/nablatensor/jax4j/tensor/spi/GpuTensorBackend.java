@@ -64,6 +64,28 @@ public abstract class GpuTensorBackend implements ComputeBackend {
               case 3u: r = x / y; break;
               case 4u: r = isnan(x) ? x : (isnan(y) ? y : max(x, y)); break;
               case 5u: r = isnan(x) ? x : (isnan(y) ? y : min(x, y)); break;
+              case 6u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.LT, "x", "y") + """
+                  ; break;
+              case 7u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.LE, "x", "y") + """
+                  ; break;
+              case 8u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.GT, "x", "y") + """
+                  ; break;
+              case 9u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.GE, "x", "y") + """
+                  ; break;
+              case 10u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.EQ, "x", "y") + """
+                  ; break;
+              case 11u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.NE, "x", "y") + """
+                  ; break;
+              case 12u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.AND, "x", "y") + """
+                  ; break;
+              case 13u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.OR, "x", "y") + """
+                  ; break;
+              case 14u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.XOR, "x", "y") + """
+                  ; break;
+              case 15u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.POW, "x", "y") + """
+                  ; break;
+              case 16u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.HYPOT, "x", "y") + """
+                  ; break;
             }
             o[i] = r;
           }
@@ -87,6 +109,28 @@ public abstract class GpuTensorBackend implements ComputeBackend {
               case 3u: r = x / s; break;
               case 4u: r = isnan(x) ? x : (isnan(s) ? s : max(x, s)); break;
               case 5u: r = isnan(x) ? x : (isnan(s) ? s : min(x, s)); break;
+              case 6u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.LT, "x", "s") + """
+                  ; break;
+              case 7u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.LE, "x", "s") + """
+                  ; break;
+              case 8u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.GT, "x", "s") + """
+                  ; break;
+              case 9u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.GE, "x", "s") + """
+                  ; break;
+              case 10u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.EQ, "x", "s") + """
+                  ; break;
+              case 11u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.NE, "x", "s") + """
+                  ; break;
+              case 12u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.AND, "x", "s") + """
+                  ; break;
+              case 13u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.OR, "x", "s") + """
+                  ; break;
+              case 14u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.XOR, "x", "s") + """
+                  ; break;
+              case 15u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.POW, "x", "s") + """
+                  ; break;
+              case 16u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.HYPOT, "x", "s") + """
+                  ; break;
             }
             o[i] = r;
           }
@@ -120,6 +164,16 @@ public abstract class GpuTensorBackend implements ComputeBackend {
               case 12u: r = """ + com.nablatensor.jax4j.tensor.StableMath.softplus("x") + """
                   ; break;
               case 9u: r = x > 0.0 ? 1.0 : (x < 0.0 ? -1.0 : 0.0); break;
+              case 13u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.unarySource(Op.SIN, "x") + """
+                  ; break;
+              case 14u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.unarySource(Op.COS, "x") + """
+                  ; break;
+              case 15u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.unarySource(Op.NOT, "x") + """
+                  ; break;
+              case 16u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.unarySource(Op.ISFINITE, "x") + """
+                  ; break;
+              case 17u: r = """ + com.nablatensor.jax4j.tensor.Elementwise.unarySource(Op.ISNAN, "x") + """
+                  ; break;
             }
             o[i] = r;
           }
@@ -1033,7 +1087,7 @@ public abstract class GpuTensorBackend implements ComputeBackend {
               + ", "
               + r
               + ")))";
-      default -> throw new IllegalArgumentException("not a binary/scalar op: " + op);
+      default -> com.nablatensor.jax4j.tensor.Elementwise.binarySource(op, l, r);
     };
   }
 
@@ -1052,7 +1106,7 @@ public abstract class GpuTensorBackend implements ComputeBackend {
       case RELU -> "(isnan(" + x + ") ? (" + x + ") : max(0.0, " + x + "))";
       case ABS -> "abs(" + x + ")";
       case SIGN -> "((" + x + ") > 0.0 ? 1.0 : ((" + x + ") < 0.0 ? -1.0 : 0.0))";
-      default -> throw new IllegalArgumentException("not a unary op: " + op);
+      default -> com.nablatensor.jax4j.tensor.Elementwise.unarySource(op, x);
     };
   }
 
@@ -1599,6 +1653,17 @@ public abstract class GpuTensorBackend implements ComputeBackend {
 
   // ---- helpers -----------------------------------------------------------
 
+  @Override
+  public DeviceBuffer arrayKernel(com.nablatensor.jax4j.tensor.ArrayKernel kernel,DeviceBuffer[] inputs) {
+    ensureInitialized();String source=kernel.source(false);
+    String pipeline=fusedPipelines.computeIfAbsent(source,code->{
+      String key="array_"+FUSED_SEQ.getAndIncrement();runtime().registerPipeline(key,code,inputs.length+1);return key;
+    });
+    GpuBuffer out=alloc(kernel.output());long[] handles=new long[inputs.length+1];handles[0]=out.buffer;
+    for(int i=0;i<inputs.length;i++)handles[i+1]=vk(inputs[i]).buffer;
+    runtime().dispatch(pipeline,grid(out.count()),1,1,handles,new int[]{},-1,0f);return out;
+  }
+
   private GpuBuffer alloc(Shape shape) {
     long bytes = Math.max(4L, Math.multiplyExact(shape.size(), (long) DType.F32.byteSize()));
     long[] handles = runtime().alloc(bytes);
@@ -1648,7 +1713,18 @@ public abstract class GpuTensorBackend implements ComputeBackend {
       case DIV -> 3;
       case MAX -> 4;
       case MIN -> 5;
-      default -> throw new IllegalArgumentException("not a binary/scalar op: " + op);
+      case LT -> 6;
+      case LE -> 7;
+      case GT -> 8;
+      case GE -> 9;
+      case EQ -> 10;
+      case NE -> 11;
+      case AND -> 12;
+      case OR -> 13;
+      case XOR -> 14;
+      case POW -> 15;
+      case HYPOT -> 16;
+      default -> throw new IllegalArgumentException("operation code: "+op);
     };
   }
 
@@ -1667,7 +1743,12 @@ public abstract class GpuTensorBackend implements ComputeBackend {
       case LOG1P -> 10;
       case EXPM1 -> 11;
       case SOFTPLUS -> 12;
-      default -> throw new IllegalArgumentException("not a unary op: " + op);
+      case SIN -> 13;
+      case COS -> 14;
+      case NOT -> 15;
+      case ISFINITE -> 16;
+      case ISNAN -> 17;
+      default -> throw new IllegalArgumentException("operation code: "+op);
     };
   }
 }

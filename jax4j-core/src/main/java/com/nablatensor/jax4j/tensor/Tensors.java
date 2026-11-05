@@ -17,7 +17,6 @@ package com.nablatensor.jax4j.tensor;
 
 import com.nablatensor.jax4j.tensor.spi.ComputeBackend;
 import com.nablatensor.jax4j.tensor.spi.DeviceBuffer;
-
 import java.util.List;
 import java.util.Random;
 
@@ -137,6 +136,172 @@ public final class Tensors {
     }
     if (endpoint && count > 1) values[count - 1] = (float) stop;
     return arrayOn(values, Shape.of(count), device);
+  }
+
+  public static Tensor where(Tensor mask, Tensor yes, Tensor no) {
+    return Tensor.where(mask, yes, no);
+  }
+
+  public static Tensor oneHot(Tensor indices, int classes) {
+    return indices.oneHot(classes);
+  }
+
+  public static Tensor concatenate(List<Tensor> parts, int axis) {
+    return Tensor.concatenate(parts, axis);
+  }
+
+  public static Tensor stack(List<Tensor> parts, int axis) {
+    return Tensor.stack(parts, axis);
+  }
+
+  public static Tensor logspace(double start, double stop, int count) {
+    return logspace(defaultDevice(), start, stop, count, 10);
+  }
+
+  public static Tensor logspace(Device device, double start, double stop, int count) {
+    return logspace(device, start, stop, count, 10);
+  }
+
+  public static Tensor logspace(double start, double stop, int count, double base) {
+    return logspace(defaultDevice(), start, stop, count, base);
+  }
+
+  public static Tensor logspace(Device device, double start, double stop, int count, double base) {
+    if (!Double.isFinite(start)
+        || !Double.isFinite(stop)
+        || !Double.isFinite(base)
+        || base <= 0
+        || count < 0) throw new IllegalArgumentException("logspace bounds/base/count");
+    float[] values = new float[count];
+    for (int i = 0; i < count; i++) {
+      double u = count <= 1 ? 0 : i / (count - 1.0);
+      values[i] = (float) Math.pow(base, (1 - u) * start + u * stop);
+    }
+    return arrayOn(values, Shape.of(count), device);
+  }
+
+  public static Tensor geomspace(double start, double stop, int count) {
+    return geomspace(defaultDevice(), start, stop, count);
+  }
+
+  public static Tensor geomspace(Device device, double start, double stop, int count) {
+    if (!Double.isFinite(start)
+        || !Double.isFinite(stop)
+        || start == 0
+        || stop == 0
+        || Math.signum(start) != Math.signum(stop)
+        || count < 0)
+      throw new IllegalArgumentException("geomspace same-sign finite nonzero bounds/count");
+    float[] values = new float[count];
+    for (int i = 0; i < count; i++) {
+      double u = count <= 1 ? 0 : i / (count - 1.0);
+      values[i] =
+          (float)
+              (Math.signum(start)
+                  * Math.exp((1 - u) * Math.log(Math.abs(start)) + u * Math.log(Math.abs(stop))));
+    }
+    if (count > 0) values[0] = (float) start;
+    if (count > 1) values[count - 1] = (float) stop;
+    return arrayOn(values, Shape.of(count), device);
+  }
+
+  public static Tensor eye(int rows) {
+    return eye(defaultDevice(), rows, rows, 0);
+  }
+
+  public static Tensor eye(int rows, int cols) {
+    return eye(defaultDevice(), rows, cols, 0);
+  }
+
+  public static Tensor eye(int rows, int cols, int offset) {
+    return eye(defaultDevice(), rows, cols, offset);
+  }
+
+  public static Tensor eye(Device device, int rows) {
+    return eye(device, rows, rows, 0);
+  }
+
+  public static Tensor eye(Device device, int rows, int cols) {
+    return eye(device, rows, cols, 0);
+  }
+
+  public static Tensor eye(Device device, int rows, int cols, int offset) {
+    Shape shape = Shape.of(rows, cols);
+    float[] values = new float[Math.toIntExact(shape.size())];
+    for (int i = 0; i < rows; i++) {
+      long j = (long) i + offset;
+      if (j >= 0 && j < cols) values[i * cols + (int) j] = 1;
+    }
+    return arrayOn(values, shape, device);
+  }
+
+  /** Matrix-indexed dense grids by default; xy swaps the first two output axes. */
+  public static List<Tensor> meshgrid(Tensor... axes) {
+    return meshgrid(List.of(axes));
+  }
+
+  public static List<Tensor> meshgrid(List<Tensor> axes) {
+    return meshgrid(axes, "ij", false);
+  }
+
+  public static List<Tensor> meshgrid(List<Tensor> axes, String indexing, boolean sparse) {
+    if (!indexing.equals("ij") && !indexing.equals("xy"))
+      throw new IllegalArgumentException("grid indexing must be ij or xy");
+    int rank = axes.size();
+    int[] dims = new int[rank];
+    for (int d = 0; d < rank; d++) {
+      if (axes.get(d).shape().rank() != 1)
+        throw new IllegalArgumentException("grid axes must be vectors");
+      if (!axes.get(d).device().equals(axes.getFirst().device()))
+        throw new IllegalArgumentException("grid device mismatch");
+      dims[d] = axes.get(d).shape().dim(0);
+    }
+    if (indexing.equals("xy") && rank >= 2) {
+      int v = dims[0];
+      dims[0] = dims[1];
+      dims[1] = v;
+    }
+    java.util.ArrayList<Tensor> grids = new java.util.ArrayList<>();
+    try {
+      for (int d = 0; d < rank; d++) {
+        int axis = indexing.equals("xy") && rank >= 2 && d < 2 ? 1 - d : d;
+        int[] shape = new int[rank];
+        java.util.Arrays.fill(shape, 1);
+        shape[axis] = axes.get(d).shape().dim(0);
+        Tensor reshaped = axes.get(d).reshape(shape);
+        Shape target = Shape.of(sparse ? shape : dims);
+        if (reshaped.shape().equals(target)) grids.add(reshaped);
+        else {
+          try {
+            grids.add(reshaped.broadcastTo(target));
+          } finally {
+            reshaped.close();
+          }
+        }
+      }
+      return List.copyOf(grids);
+    } catch (RuntimeException e) {
+      for (Tensor grid : grids) grid.close();
+      throw e;
+    }
+  }
+
+  public static List<Tensor> indices(int... dims) {
+    return indices(defaultDevice(), dims);
+  }
+
+  public static List<Tensor> indices(Device device, int... dims) {
+    Shape.of(dims);
+    java.util.ArrayList<Tensor> axes = new java.util.ArrayList<>();
+    try {
+      for (int dim : dims) {
+        if (dim > 16777216) throw new IllegalArgumentException("F32 coordinate range");
+        axes.add(arange(device, dim));
+      }
+      return meshgrid(axes);
+    } finally {
+      for (Tensor axis : axes) axis.close();
+    }
   }
 
   public static Tensor randn(int... dims) {

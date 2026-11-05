@@ -415,6 +415,395 @@ public final class Tensor implements AutoCloseable {
     return wrap(backend.scatterAdd(buffer, target, indices.clone()));
   }
 
+  public Tensor lt(Tensor other) {
+    return binaryBroadcast(Op.LT, other);
+  }
+
+  public Tensor lt(double value) {
+    return wrap(backend.scalar(Op.LT, buffer, value));
+  }
+
+  public Tensor le(Tensor other) {
+    return binaryBroadcast(Op.LE, other);
+  }
+
+  public Tensor le(double value) {
+    return wrap(backend.scalar(Op.LE, buffer, value));
+  }
+
+  public Tensor gt(Tensor other) {
+    return binaryBroadcast(Op.GT, other);
+  }
+
+  public Tensor gt(double value) {
+    return wrap(backend.scalar(Op.GT, buffer, value));
+  }
+
+  public Tensor ge(Tensor other) {
+    return binaryBroadcast(Op.GE, other);
+  }
+
+  public Tensor ge(double value) {
+    return wrap(backend.scalar(Op.GE, buffer, value));
+  }
+
+  public Tensor eq(Tensor other) {
+    return binaryBroadcast(Op.EQ, other);
+  }
+
+  public Tensor eq(double value) {
+    return wrap(backend.scalar(Op.EQ, buffer, value));
+  }
+
+  public Tensor ne(Tensor other) {
+    return binaryBroadcast(Op.NE, other);
+  }
+
+  public Tensor ne(double value) {
+    return wrap(backend.scalar(Op.NE, buffer, value));
+  }
+
+  public Tensor and(Tensor other) {
+    return binaryBroadcast(Op.AND, other);
+  }
+
+  public Tensor and(double value) {
+    return wrap(backend.scalar(Op.AND, buffer, value));
+  }
+
+  public Tensor or(Tensor other) {
+    return binaryBroadcast(Op.OR, other);
+  }
+
+  public Tensor or(double value) {
+    return wrap(backend.scalar(Op.OR, buffer, value));
+  }
+
+  public Tensor xor(Tensor other) {
+    return binaryBroadcast(Op.XOR, other);
+  }
+
+  public Tensor xor(double value) {
+    return wrap(backend.scalar(Op.XOR, buffer, value));
+  }
+
+  public Tensor pow(Tensor other) {
+    return binaryBroadcast(Op.POW, other);
+  }
+
+  public Tensor pow(double value) {
+    return wrap(backend.scalar(Op.POW, buffer, value));
+  }
+
+  public Tensor hypot(Tensor other) {
+    return binaryBroadcast(Op.HYPOT, other);
+  }
+
+  public Tensor hypot(double value) {
+    return wrap(backend.scalar(Op.HYPOT, buffer, value));
+  }
+
+  public Tensor sin() {
+    return wrap(backend.unary(Op.SIN, buffer));
+  }
+
+  public Tensor cos() {
+    return wrap(backend.unary(Op.COS, buffer));
+  }
+
+  public Tensor not() {
+    return wrap(backend.unary(Op.NOT, buffer));
+  }
+
+  public Tensor isfinite() {
+    return wrap(backend.unary(Op.ISFINITE, buffer));
+  }
+
+  public Tensor isnan() {
+    return wrap(backend.unary(Op.ISNAN, buffer));
+  }
+
+  /** Execute a shape-specialized array operation in the innermost input context. */
+  static Tensor arrayOp(ArrayKernel kernel, Tensor... tensors) {
+    if (tensors.length == 0) throw new IllegalArgumentException("inputs required");
+    ComputeBackend context = tensors[0].backend;
+    DeviceBuffer[] buffers = new DeviceBuffer[tensors.length];
+    for (int i = 0; i < tensors.length; i++) {
+      if (!tensors[i].device().equals(tensors[0].device()) || tensors[i].dtype() != DType.F32)
+        throw new IllegalArgumentException("array operations require same-device F32 inputs");
+      context = new Tensor(context, tensors[0].buffer).common(tensors[i]);
+      buffers[i] = tensors[i].buffer;
+    }
+    return new Tensor(context, context.arrayKernel(kernel, buffers));
+  }
+
+  static Tensor arrayOp(
+      ArrayKernel.Kind kind, Shape output, int axis, int[] params, Tensor... inputs) {
+    Shape[] shapes = new Shape[inputs.length];
+    for (int i = 0; i < inputs.length; i++) shapes[i] = inputs[i].shape();
+    return arrayOp(new ArrayKernel(kind, output, shapes, axis, params), inputs);
+  }
+
+  public static Tensor where(Tensor mask, Tensor yes, Tensor no) {
+    Shape target = Shape.broadcast(mask.shape(), Shape.broadcast(yes.shape(), no.shape()));
+    java.util.ArrayList<Tensor> expanded = new java.util.ArrayList<>();
+    Tensor[] inputs = {mask, yes, no};
+    try {
+      for (int i = 0; i < inputs.length; i++)
+        if (!inputs[i].shape().equals(target)) {
+          inputs[i] = inputs[i].broadcastTo(target);
+          expanded.add(inputs[i]);
+        }
+      return arrayOp(ArrayKernel.Kind.WHERE, target, 0, new int[0], inputs);
+    } finally {
+      for (Tensor tensor : expanded) tensor.close();
+    }
+  }
+
+  public Tensor slice(int axis, int start, int stop) {
+    return slice(axis, start, stop, 1);
+  }
+
+  /** Python-style explicit integer bounds; stop is exclusive, step cannot be zero. */
+  public Tensor slice(int axis, int start, int stop, int step) {
+    axis = normalizeAxis(axis);
+    int length = shape().dim(axis);
+    if (step == 0) throw new IllegalArgumentException("zero slice step");
+    long a = start < 0 ? (long) start + length : start, b = stop < 0 ? (long) stop + length : stop;
+    a = step > 0 ? Math.max(0, Math.min(length, a)) : Math.max(-1, Math.min(length - 1, a));
+    b = step > 0 ? Math.max(0, Math.min(length, b)) : Math.max(-1, Math.min(length - 1, b));
+    int count =
+        (int)
+            Math.max(
+                0, step > 0 ? (b - a + step - 1) / step : (a - b - (long) step - 1) / -(long) step);
+    int[] dims = shape().dims();
+    dims[axis] = count;
+    Shape target = Shape.of(dims);
+    int[] map = new int[Math.toIntExact(target.size())];
+    for (int i = 0; i < map.length; i++) {
+      int source = 0, stride = 1, n = i;
+      for (int d = dims.length - 1; d >= 0; d--) {
+        int c = n / axisStride(target, d) % Math.max(1, dims[d]);
+        source += (d == axis ? (int) (a + (long) c * step) : c) * stride;
+        stride *= shape().dim(d);
+      }
+      map[i] = source;
+    }
+    return reindex(target, map);
+  }
+
+  private static int axisStride(Shape shape, int axis) {
+    int n = 1;
+    for (int d = axis + 1; d < shape.rank(); d++) n = Math.multiplyExact(n, shape.dim(d));
+    return Math.max(1, n);
+  }
+
+  public Tensor take(Tensor indices, int axis) {
+    axis = normalizeAxis(axis);
+    if (shape().dim(axis) > 16777216) throw new IllegalArgumentException("F32 index range");
+    int[] dims = new int[shape().rank() - 1 + indices.shape().rank()];
+    int j = 0;
+    for (int d = 0; d < axis; d++) dims[j++] = shape().dim(d);
+    for (int v : indices.shape().dims()) dims[j++] = v;
+    for (int d = axis + 1; d < shape().rank(); d++) dims[j++] = shape().dim(d);
+    return arrayOp(ArrayKernel.Kind.TAKE, Shape.of(dims), axis, new int[0], this, indices);
+  }
+
+  private void checkRegion(Shape region, Tensor starts) {
+    if (region.rank() != shape().rank()
+        || starts.shape().rank() != 1
+        || starts.shape().dim(0) != shape().rank())
+      throw new IllegalArgumentException("region/start rank");
+    for (int d = 0; d < region.rank(); d++)
+      if (region.dim(d) > shape().dim(d) || shape().dim(d) > 16777216)
+        throw new IllegalArgumentException("region extent");
+  }
+
+  public Tensor dynamicSlice(Tensor starts, int... sizes) {
+    Shape region = Shape.of(sizes);
+    checkRegion(region, starts);
+    return arrayOp(ArrayKernel.Kind.SLICE, region, 0, new int[0], this, starts);
+  }
+
+  public Tensor dynamicUpdateSlice(Tensor update, Tensor starts) {
+    checkRegion(update.shape(), starts);
+    return arrayOp(ArrayKernel.Kind.UPDATE, shape(), 0, new int[0], this, update, starts);
+  }
+
+  public static Tensor concatenate(List<Tensor> parts, int axis) {
+    if (parts.isEmpty()) throw new IllegalArgumentException("empty concatenate");
+    Tensor first = parts.getFirst();
+    axis = first.normalizeAxis(axis);
+    int[] dims = first.shape().dims();
+    dims[axis] = 0;
+    for (Tensor part : parts) {
+      if (part.shape().rank() != dims.length)
+        throw new IllegalArgumentException("concatenate rank");
+      for (int d = 0; d < dims.length; d++)
+        if (d != axis && part.shape().dim(d) != dims[d])
+          throw new IllegalArgumentException("concatenate shape");
+      dims[axis] = Math.addExact(dims[axis], part.shape().dim(axis));
+    }
+    return arrayOp(
+        ArrayKernel.Kind.CONCAT, Shape.of(dims), axis, new int[0], parts.toArray(Tensor[]::new));
+  }
+
+  public static Tensor stack(List<Tensor> parts, int axis) {
+    if (parts.isEmpty()) throw new IllegalArgumentException("empty stack");
+    int rank = parts.getFirst().shape().rank() + 1;
+    axis = axis < 0 ? axis + rank : axis;
+    if (axis < 0 || axis >= rank) throw new IllegalArgumentException("stack axis");
+    java.util.ArrayList<Tensor> expanded = new java.util.ArrayList<>();
+    try {
+      for (Tensor part : parts) {
+        if (!part.shape().equals(parts.getFirst().shape()))
+          throw new IllegalArgumentException("stack shape");
+        int[] dims = new int[rank];
+        for (int d = 0, j = 0; d < rank; d++) dims[d] = d == axis ? 1 : part.shape().dim(j++);
+        expanded.add(part.reshape(dims));
+      }
+      return concatenate(expanded, axis);
+    } finally {
+      for (Tensor tensor : expanded) tensor.close();
+    }
+  }
+
+  public Tensor prod() {
+    try (Tensor flat = reshape(Math.toIntExact(shape().size()))) {
+      return arrayOp(ArrayKernel.Kind.PROD, Shape.of(1), 0, new int[0], flat);
+    }
+  }
+
+  public Tensor prod(int axis) {
+    return prod(axis, false);
+  }
+
+  public Tensor prod(int axis, boolean keepDims) {
+    axis = normalizeAxis(axis);
+    int[] dims = new int[shape().rank() - (keepDims ? 0 : 1)];
+    for (int d = 0, j = 0; d < shape().rank(); d++)
+      if (d != axis) dims[j++] = shape().dim(d);
+      else if (keepDims) dims[j++] = 1;
+    return arrayOp(ArrayKernel.Kind.PROD, Shape.of(dims), axis, new int[0], this);
+  }
+
+  public Tensor argmin(int axis) {
+    try (Tensor negative = neg()) {
+      return negative.argmax(axis);
+    }
+  }
+
+  public record TopK(Tensor values, Tensor indices) {}
+
+  /** Descending along the last axis; NaNs first, ties prefer smaller indices. */
+  public TopK topK(int k) {
+    if (shape().rank() == 0) throw new IllegalArgumentException("topK rank");
+    int[] dims = shape().dims();
+    int width = dims[dims.length - 1];
+    if (k < 0 || k > width || width > 16777216)
+      throw new IllegalArgumentException("topK count/index range");
+    dims[dims.length - 1] = k;
+    Tensor values = arrayOp(ArrayKernel.Kind.TOPK, Shape.of(dims), 0, new int[] {k, 0}, this);
+    try {
+      return new TopK(
+          values, arrayOp(ArrayKernel.Kind.TOPK, Shape.of(dims), 0, new int[] {k, 1}, this));
+    } catch (RuntimeException e) {
+      values.close();
+      throw e;
+    }
+  }
+
+  public Tensor segmentSum(Tensor ids, int count) {
+    if (shape().rank() < 1
+        || ids.shape().rank() != 1
+        || ids.shape().dim(0) != shape().dim(0)
+        || count < 0
+        || count > 16777216) throw new IllegalArgumentException("segment shapes/count");
+    int[] dims = shape().dims();
+    dims[0] = count;
+    return arrayOp(ArrayKernel.Kind.SEGMENT, Shape.of(dims), 0, new int[0], this, ids);
+  }
+
+  public Tensor oneHot(int classes) {
+    if (classes < 0 || classes > 16777216) throw new IllegalArgumentException("class count");
+    int[] dims = java.util.Arrays.copyOf(shape().dims(), shape().rank() + 1);
+    dims[dims.length - 1] = classes;
+    return arrayOp(ArrayKernel.Kind.ONEHOT, Shape.of(dims), 0, new int[0], this);
+  }
+
+  public Tensor diff(int axis) {
+    return diff(1, axis);
+  }
+
+  public Tensor diff(int order, int axis) {
+    axis = normalizeAxis(axis);
+    if (order < 0) throw new IllegalArgumentException("negative diff order");
+    Tensor current = reshape(shape().dims());
+    try {
+      for (int n = 0; n < order; n++) {
+        int count = current.shape().dim(axis);
+        if (count == 0) break;
+        try (Tensor left = current.slice(axis, 0, count - 1);
+            Tensor right = current.slice(axis, 1, count)) {
+          Tensor next = right.sub(left);
+          current.close();
+          current = next;
+        }
+      }
+      Tensor result = current;
+      current = null;
+      return result;
+    } finally {
+      if (current != null) current.close();
+    }
+  }
+
+  public Tensor roll(int shift, int axis) {
+    axis = normalizeAxis(axis);
+    int width = shape().dim(axis);
+    if (width == 0) return reshape(shape().dims());
+    int amount = Math.floorMod(shift, width), stride = axisStride(shape(), axis);
+    int[] map = new int[Math.toIntExact(shape().size())];
+    for (int i = 0; i < map.length; i++) {
+      int c = i / stride % width;
+      map[i] = i + (Math.floorMod(c - amount, width) - c) * stride;
+    }
+    return reindex(shape(), map);
+  }
+
+  public Tensor pad(int[][] widths) {
+    return pad(widths, 0);
+  }
+
+  public Tensor pad(int[][] widths, float value) {
+    if (widths.length != shape().rank()) throw new IllegalArgumentException("pad rank");
+    int[] dims = shape().dims();
+    for (int d = 0; d < dims.length; d++) {
+      if (widths[d].length != 2 || widths[d][0] < 0 || widths[d][1] < 0)
+        throw new IllegalArgumentException("pad width");
+      dims[d] = Math.addExact(dims[d], Math.addExact(widths[d][0], widths[d][1]));
+    }
+    Shape target = Shape.of(dims);
+    int[] map = new int[Math.toIntExact(target.size())];
+    for (int i = 0; i < map.length; i++) {
+      int source = 0;
+      boolean inside = true;
+      for (int d = 0; d < dims.length; d++) {
+        int c = i / axisStride(target, d) % Math.max(1, dims[d]) - widths[d][0];
+        inside &= c >= 0 && c < shape().dim(d);
+        source += c * axisStride(shape(), d);
+      }
+      map[i] = inside ? source : -1;
+    }
+    if (value == 0) return reindex(target, map);
+    try (Tensor result = reindex(target, map);
+        Tensor ones = onesLike();
+        Tensor mask = ones.reindex(target, map);
+        Tensor fill = result.fullLike(value)) {
+      return where(mask, result, fill);
+    }
+  }
+
   // ---- convolution --------------------------------------------------------
 
   /**

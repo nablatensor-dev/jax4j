@@ -82,7 +82,10 @@ counts. Empty CUDA buffers now avoid zero-byte allocations and zero-work
 launches. Empty-axis broadcasting and scalar reduction cotangents were also
 corrected; fused CPU SIGN support was completed for reduction gradients.
 
-## Next: batch 2 (not implemented)
+## Batch 2 follow-up
+
+The following families are now implemented in the working checkout; see
+[array operations](array-operations.md) for APIs, execution coverage and limits.
 
 - Comparisons and masks: <, >, equality, logical operations, where, isfinite, isnan.
 - Indexing: slicing, take, concatenation, dynamic slice/update.

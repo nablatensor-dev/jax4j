@@ -500,6 +500,20 @@ public final class Transforms {
 
     Rule rule(String name, Object[] args, Tensor a, Tensor b, Tensor y, List<Node> parents) {
       return switch (name) {
+        case "arrayKernel" -> {
+          ArrayKernel kernel=(ArrayKernel)args[0];
+          if(kernel.derivative())throw new UnsupportedOperationException("Higher-order derivatives of batch-2 array kernels are not yet supported");
+          List<Tensor> xs=parents.stream().map(this::primal).toList();
+          yield new Rule(ts->{
+            java.util.ArrayList<Tensor> all=new java.util.ArrayList<>(xs);all.addAll(ts);
+            return Tensor.arrayOp(kernel.push(),all.toArray(Tensor[]::new));
+          },g->{
+            java.util.ArrayList<Tensor> all=new java.util.ArrayList<>(xs);all.add(g);
+            Tensor[] inputs=all.toArray(Tensor[]::new);java.util.ArrayList<Tensor> gradients=new java.util.ArrayList<>();
+            for(int i=0;i<xs.size();i++)gradients.add(Tensor.arrayOp(kernel.pull(i),inputs));
+            return gradients;
+          });
+        }
         case "program" -> {
           DeviceProgram program = (DeviceProgram) args[0];
           List<Tensor> xs = parents.stream().map(this::primal).toList();
@@ -544,6 +558,9 @@ public final class Transforms {
               da = sign.add(1).mul(.5);
               db = sign.neg().add(1).mul(.5);
             }
+            case POW -> { da = b.mul(a.pow(b.sub(1))); db = y.mul(a.log()); }
+            case HYPOT -> { da = a.div(y); db = b.div(y); }
+            case LT, LE, GT, GE, EQ, NE, AND, OR, XOR -> { da = a.fullLike(0); db = b.fullLike(0); }
             default -> throw new UnsupportedOperationException("binary derivative " + op);
           }
           yield new Rule(
@@ -557,6 +574,9 @@ public final class Transforms {
             case MUL -> local(a.fullLike((float) v));
             case DIV -> local(a.fullLike((float) (1 / v)));
             case MAX, MIN -> local(a.sub(v).sign().mul(op == Op.MAX ? 1 : -1).add(1).mul(.5));
+            case POW -> local(v == 0 ? a.fullLike(0) : a.pow(v - 1).mul(v));
+            case HYPOT -> local(a.div(y));
+            case LT, LE, GT, GE, EQ, NE, AND, OR, XOR -> local(a.fullLike(0));
             default -> throw new UnsupportedOperationException("scalar derivative " + op);
           };
         }
@@ -575,7 +595,9 @@ public final class Transforms {
                   case SIGMOID -> y.mul(y.neg().add(1));
                   case RELU -> a.sign().maximum(0);
                   case ABS -> a.sign();
-                  case SIGN -> a.fullLike(0);
+                  case SIGN, NOT, ISFINITE, ISNAN -> a.fullLike(0);
+                  case SIN -> a.cos();
+                  case COS -> a.sin().neg();
                   default -> throw new UnsupportedOperationException("unary derivative");
                 });
         case "reshape" ->

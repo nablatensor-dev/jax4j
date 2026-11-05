@@ -221,6 +221,12 @@ public final class Vmap {
                             0));
         return new Batched(this, own(real.custom(physical(input), mappedRule)), input.shape());
       }
+      if(name.equals("arrayKernel")) {
+        ArrayKernel kernel=(ArrayKernel)args[0];DeviceBuffer[] original=(DeviceBuffer[])args[1];
+        DeviceBuffer[] physical=new DeviceBuffer[original.length];
+        for(int i=0;i<original.length;i++)physical[i]=physical(original[i]);
+        return new Batched(this,own(real.arrayKernel(kernel.batched(batch),physical)),kernel.output());
+      }
       if (name.equals("program")) {
         DeviceProgram program = (DeviceProgram) args[0];
         DeviceBuffer[] originals = (DeviceBuffer[]) args[1],

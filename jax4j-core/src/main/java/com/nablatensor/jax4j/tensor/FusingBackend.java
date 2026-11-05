@@ -115,6 +115,13 @@ final class FusingBackend implements com.nablatensor.jax4j.tensor.spi.TracingBac
   }
 
   @Override
+  public DeviceBuffer arrayKernel(ArrayKernel kernel,DeviceBuffer[] inputs) {
+    DeviceBuffer[] actual=new DeviceBuffer[inputs.length];
+    for(int i=0;i<inputs.length;i++)actual[i]=materialize(inputs[i]);
+    return own(delegate.arrayKernel(kernel,actual));
+  }
+
+  @Override
   public DeviceBuffer unary(Op op, DeviceBuffer a) {
     ExprBuffer in = traced(a);
     return new ExprBuffer(

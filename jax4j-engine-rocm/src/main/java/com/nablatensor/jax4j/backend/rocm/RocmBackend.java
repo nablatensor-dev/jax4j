@@ -55,6 +55,28 @@ public final class RocmBackend implements ComputeBackend {
           case 3: r = x / y; break;
           case 4: r = isnan(x) ? x : (isnan(y) ? y : fmaxf(x, y)); break;
           case 5: r = isnan(x) ? x : (isnan(y) ? y : fminf(x, y)); break;
+          case 6: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.LT, "x", "y")) + """
+              ; break;
+          case 7: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.LE, "x", "y")) + """
+              ; break;
+          case 8: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.GT, "x", "y")) + """
+              ; break;
+          case 9: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.GE, "x", "y")) + """
+              ; break;
+          case 10: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.EQ, "x", "y")) + """
+              ; break;
+          case 11: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.NE, "x", "y")) + """
+              ; break;
+          case 12: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.AND, "x", "y")) + """
+              ; break;
+          case 13: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.OR, "x", "y")) + """
+              ; break;
+          case 14: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.XOR, "x", "y")) + """
+              ; break;
+          case 15: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.POW, "x", "y")) + """
+              ; break;
+          case 16: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.HYPOT, "x", "y")) + """
+              ; break;
         }
         out[i] = r;
       }
@@ -69,6 +91,28 @@ public final class RocmBackend implements ComputeBackend {
           case 3: r = x / s; break;
           case 4: r = isnan(x) ? x : (isnan(s) ? s : fmaxf(x, s)); break;
           case 5: r = isnan(x) ? x : (isnan(s) ? s : fminf(x, s)); break;
+          case 6: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.LT, "x", "s")) + """
+              ; break;
+          case 7: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.LE, "x", "s")) + """
+              ; break;
+          case 8: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.GT, "x", "s")) + """
+              ; break;
+          case 9: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.GE, "x", "s")) + """
+              ; break;
+          case 10: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.EQ, "x", "s")) + """
+              ; break;
+          case 11: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.NE, "x", "s")) + """
+              ; break;
+          case 12: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.AND, "x", "s")) + """
+              ; break;
+          case 13: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.OR, "x", "s")) + """
+              ; break;
+          case 14: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.XOR, "x", "s")) + """
+              ; break;
+          case 15: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.POW, "x", "s")) + """
+              ; break;
+          case 16: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(Op.HYPOT, "x", "s")) + """
+              ; break;
         }
         out[i] = r;
       }
@@ -90,6 +134,16 @@ public final class RocmBackend implements ComputeBackend {
           case 11: r = expm1f(x); break;
           case 12: r = fmaxf(x,0.0f)+log1pf(expf(-fabsf(x))); break;
           case 9: r = x > 0.0f ? 1.0f : (x < 0.0f ? -1.0f : 0.0f); break;
+          case 13: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.unarySource(Op.SIN, "x")) + """
+              ; break;
+          case 14: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.unarySource(Op.COS, "x")) + """
+              ; break;
+          case 15: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.unarySource(Op.NOT, "x")) + """
+              ; break;
+          case 16: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.unarySource(Op.ISFINITE, "x")) + """
+              ; break;
+          case 17: r = """ + com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.unarySource(Op.ISNAN, "x")) + """
+              ; break;
         }
         out[i] = r;
       }
@@ -881,7 +935,7 @@ public final class RocmBackend implements ComputeBackend {
           + ") : fmaxf(" + l + ", " + r + ")))";
       case MIN -> "(isnan(" + l + ") ? (" + l + ") : (isnan(" + r + ") ? (" + r
           + ") : fminf(" + l + ", " + r + ")))";
-      default -> throw new IllegalArgumentException("not a binary/scalar op: " + op);
+      default -> com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.binarySource(op, l, r));
     };
   }
 
@@ -900,7 +954,7 @@ public final class RocmBackend implements ComputeBackend {
       case RELU -> "(isnan(" + x + ") ? (" + x + ") : fmaxf(0.0f, " + x + "))";
       case ABS -> "fabsf(" + x + ")";
       case SIGN -> "((" + x + ") > 0.0f ? 1.0f : ((" + x + ") < 0.0f ? -1.0f : 0.0f))";
-      default -> throw new IllegalArgumentException("not a unary op: " + op);
+      default -> com.nablatensor.jax4j.tensor.Elementwise.cuda(com.nablatensor.jax4j.tensor.Elementwise.unarySource(op, x));
     };
   }
 
@@ -1072,7 +1126,18 @@ public final class RocmBackend implements ComputeBackend {
       case DIV -> 3;
       case MAX -> 4;
       case MIN -> 5;
-      default -> throw new IllegalArgumentException("not a binary/scalar op: " + op);
+      case LT -> 6;
+      case LE -> 7;
+      case GT -> 8;
+      case GE -> 9;
+      case EQ -> 10;
+      case NE -> 11;
+      case AND -> 12;
+      case OR -> 13;
+      case XOR -> 14;
+      case POW -> 15;
+      case HYPOT -> 16;
+      default -> throw new IllegalArgumentException("operation code: "+op);
     };
   }
 
@@ -1091,7 +1156,12 @@ public final class RocmBackend implements ComputeBackend {
       case LOG1P -> 10;
       case EXPM1 -> 11;
       case SOFTPLUS -> 12;
-      default -> throw new IllegalArgumentException("not a unary op: " + op);
+      case SIN -> 13;
+      case COS -> 14;
+      case NOT -> 15;
+      case ISFINITE -> 16;
+      case ISNAN -> 17;
+      default -> throw new IllegalArgumentException("operation code: "+op);
     };
   }
 }

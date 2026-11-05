@@ -273,6 +273,14 @@ public interface ComputeBackend {
     return upload(result, target, input.dtype(), input.device());
   }
 
+  /** Device-local selection/index/reduction kernel; CPU reference implementation. */
+  default DeviceBuffer arrayKernel(com.nablatensor.jax4j.tensor.ArrayKernel kernel, DeviceBuffer[] inputs) {
+    if(deviceType()!=DeviceType.CPU) throw new UnsupportedOperationException(name()+" requires array-kernel lowering");
+    float[][] values=new float[inputs.length][];
+    for(int i=0;i<inputs.length;i++) values[i]=download(inputs[i]);
+    return upload(kernel.evaluate(values),kernel.output(),DType.F32,inputs[0].device());
+  }
+
   /** Block until all queued kernels on this backend have completed. */
   default void sync() {}
 

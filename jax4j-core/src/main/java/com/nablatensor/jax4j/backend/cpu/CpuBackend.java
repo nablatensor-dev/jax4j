@@ -88,7 +88,7 @@ public final class CpuBackend implements ComputeBackend, QuantizedOps {
       case MIN -> {
         for (int i = 0; i < out.length; i++) out[i] = Math.min(x[i], y[i]);
       }
-      default -> throw new IllegalArgumentException("not a binary op: " + op);
+      default -> { for(int i=0;i<out.length;i++) out[i]=applyBinary(op,x[i],y[i]); }
     }
     return like(left, out);
   }
@@ -118,7 +118,7 @@ public final class CpuBackend implements ComputeBackend, QuantizedOps {
       case MIN -> {
         for (int i = 0; i < out.length; i++) out[i] = Math.min(x[i], s);
       }
-      default -> throw new IllegalArgumentException("not a scalar op: " + op);
+      default -> { for(int i=0;i<out.length;i++) out[i]=applyBinary(op,x[i],s); }
     }
     return like(left, out);
   }
@@ -164,7 +164,7 @@ public final class CpuBackend implements ComputeBackend, QuantizedOps {
           out[i] = x[i] > 0 ? 1.0f : x[i] < 0 ? -1.0f : 0.0f;
         }
       }
-      default -> throw new IllegalArgumentException("not a unary op: " + op);
+      default -> { for(int i=0;i<out.length;i++) out[i]=applyUnary(op,x[i]); }
     }
     return like(left, out);
   }
@@ -665,7 +665,7 @@ public final class CpuBackend implements ComputeBackend, QuantizedOps {
       case DIV -> x / y;
       case MAX -> Math.max(x, y);
       case MIN -> Math.min(x, y);
-      default -> throw new IllegalArgumentException("not a binary/scalar op: " + op);
+      default -> com.nablatensor.jax4j.tensor.Elementwise.binary(op,x,y);
     };
   }
 
@@ -684,7 +684,7 @@ public final class CpuBackend implements ComputeBackend, QuantizedOps {
       case RELU -> Math.max(0.0f, x);
       case ABS -> Math.abs(x);
       case SIGN -> x > 0 ? 1 : x < 0 ? -1 : 0;
-      default -> throw new IllegalArgumentException("not a unary op: " + op);
+      default -> com.nablatensor.jax4j.tensor.Elementwise.unary(op,x);
     };
   }
 
