@@ -195,6 +195,17 @@ execution remain unverified.
 
 ### JAX4J 0.2.2
 
+Version 0.2.2 is published on Maven Central and GitHub. The immutable release
+tag points to `88a50181c0fb845365ee59ea4ac6e3b703abc962`.
+
+Central deployment: `3f36b035-3c00-491d-9072-f56c20b25054`, state `PUBLISHED`.
+The 100-file signed bundle SHA-256 is
+`35485a85ab1995f4d49548e40a1179d6ed7099b2d8ac59858e04130223bae1b1`.
+All 100 public files were downloaded and matched byte for byte, and all seven
+GitHub JAR checksums passed. A fresh Maven-cache consumer resolved 0.2.2,
+compiled and ran the new constructor, stable-probability, selection, gather
+and autodiff APIs successfully.
+
 Version 0.2.2 adds array constructors, stable numerical functions and statistics,
 comparisons/masks, indexing and dynamic updates, grids, ranking/segment sums,
 and array conveniences. See [stable math](stable-math.md) and
