@@ -193,6 +193,25 @@ SHA-256 is `ca1582deac2e74f92399ff25477baea484da7943fda173d79d0c39561dae7847`.
 Hardware validation passed 23 CUDA, 31 Vulkan and 36 wgpu checks. ROCm and SIMD
 execution remain unverified.
 
+### JAX4J 0.2.2
+
+Version 0.2.2 adds array constructors, stable numerical functions and statistics,
+comparisons/masks, indexing and dynamic updates, grids, ranking/segment sums,
+and array conveniences. See [stable math](stable-math.md) and
+[array operations](array-operations.md) for semantics and limitations.
+
+Release validation on Java 25.0.1: CPU/core 79 passed and one existing skip;
+Vulkan 62 passed; examples eight passed. The exact 0.2.2 source/POMs also passed
+79 core tests (one skip) and 48 CUDA tests on zbox's NVIDIA GTX 1060, driver
+580.178.04. All seven modules compiled. ROCm, wgpu and SIMD execution remain
+unverified for this release. Browser WebGPU support was not expanded.
+
+Publish the parent plus six library modules; examples are GitHub-only. Reduced
+Central packaging contains exactly 100 files, with md5/sha1 checksums only and
+font-free Javadocs. F32 mask/index conventions, first-order array-kernel
+derivatives, straightforward ranking performance, and CUDA's existing scan
+restriction are documented release limitations.
+
 ## Reduced packaging for future Central releases
 
 Keep the binary JAR, POM, sources JAR and Javadoc JAR for each library module.

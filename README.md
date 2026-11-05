@@ -3,7 +3,7 @@
 [Website](https://nablatensor.com/)
 
 Java 25 tensors, automatic differentiation and neural networks under
-`com.nablatensor:jax4j:0.2.1`. The fluent Tensor API supports fused
+`com.nablatensor:jax4j:0.2.2`. The fluent Tensor API supports fused
 CPU, CUDA, Vulkan and wgpu-native execution. There are no dependencies on SonicTensor,
 NablaTensor or TensorJIT JARs.
 
@@ -64,33 +64,34 @@ library, motivated by three practical frustrations:
 
 ## Releases
 
-[JAX4J 0.2.1](https://github.com/nablatensor-dev/jax4j/releases/tag/v0.2.1)
+[JAX4J 0.2.2](https://github.com/nablatensor-dev/jax4j/releases/tag/v0.2.2)
 is published on Maven Central. Module JARs and checksums are also available
 in the GitHub release.
 
 ## Maven Central
 
-JAX4J 0.2.1 is available under `com.nablatensor` on
-[Maven Central](https://central.sonatype.com/artifact/com.nablatensor/jax4j-core/0.2.1).
+JAX4J 0.2.2 is available under `com.nablatensor` on
+[Maven Central](https://central.sonatype.com/artifact/com.nablatensor/jax4j-core/0.2.2).
 
 ```xml
 <dependency>
   <groupId>com.nablatensor</groupId>
   <artifactId>jax4j-core</artifactId>
-  <version>0.2.1</version>
+  <version>0.2.2</version>
 </dependency>
 <dependency>
   <groupId>com.nablatensor</groupId>
   <artifactId>jax4j-engine-vulkan</artifactId>
-  <version>0.2.1</version>
+  <version>0.2.2</version>
   <scope>runtime</scope>
 </dependency>
 ```
 
 Use `jax4j-engine-wgpu` for wgpu-native. The parent artifact `jax4j` is a POM.
 CUDA, ROCm and SIMD artifacts are included in the GitHub release.
-Version 0.2.1 validated Vulkan and wgpu hardware; CUDA, ROCm and SIMD
-execution remain unverified for this version. Finance APIs are maintained separately in
+Version 0.2.2 validates CPU, Vulkan and CUDA execution (CUDA on an NVIDIA GTX 1060).
+ROCm, wgpu and SIMD execution remain unverified for this version; their modules
+compile in the all-module release build. Finance APIs are maintained separately in
 [NablaTensor Quant](https://github.com/nablatensor-dev/quant).
 
 ## Build and validate
@@ -118,7 +119,10 @@ failure. CPU tests never need a GPU. Native execution uses Java FFM with
 | `jax4j-engine-wgpu` | wgpu-native tensor runtime, WGSL cooperative kernels and native GLSL/Naga lowering |
 | `jax4j-examples` | Optional examples and numerical validation harnesses (`-Pexamples`) |
 
-Version 0.2.1 corrects the Java package namespace. Update imports when upgrading from earlier releases.
+Version 0.2.1 corrected the Java package namespace. Version 0.2.2 adds array
+constructors, stable math/statistics, masks, indexing, grids and array operations.
+See [stable math](docs/stable-math.md) and [array operations](docs/array-operations.md)
+for API semantics and backend/derivative limitations.
 Java packages use `com.nablatensor.jax4j`; tensor factories are available through `Tensors`.
 Select a default backend with `-Djax4j.tensor.backend=cpu` or `JAX4J_BACKEND=cpu`.
 

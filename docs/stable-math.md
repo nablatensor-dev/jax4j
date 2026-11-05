@@ -1,7 +1,6 @@
 # Stable math and statistical reductions (batch 1)
 
-Added to the working checkout on 2026-11-05. These methods are not available in
-previously published jars until a new release is published.
+Introduced in 0.2.2 on 2026-11-05. These methods are unavailable in 0.2.1 jars.
 
 ## API
 

@@ -1,7 +1,6 @@
 # Array operations: batch 2
 
-These are unreleased working-checkout additions. The site's pinned browser jar
-is unchanged. CPU, native Vulkan and CUDA are the validation targets.
+Introduced in 0.2.2. The site's pinned browser jar is unchanged. CPU, native Vulkan and CUDA are the validation targets.
 
 ## Public API
 
