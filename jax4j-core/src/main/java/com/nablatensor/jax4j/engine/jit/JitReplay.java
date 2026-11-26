@@ -99,7 +99,7 @@ final class JitReplay extends AbstractAadExecutable {
   private final ExecutorService pool;
 
   JitReplay(AadTape tape, AadOptions options) {
-    super(tape, options);
+    super(tape, options, false);
     this.f32 = options.precision() == AadOptions.Precision.FLOAT32;
     this.segNodes = Math.max(8, Integer.getInteger("nablatensor.jit.seg", 128));
 

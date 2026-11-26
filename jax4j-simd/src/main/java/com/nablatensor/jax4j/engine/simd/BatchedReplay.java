@@ -103,7 +103,7 @@ abstract class BatchedReplay extends AbstractAadExecutable {
   }
 
   BatchedReplay(AadTape tape, AadOptions options) {
-    super(tape, options);
+    super(tape, options, false);
     this.randCount = tape.randCount();
     this.threads = Math.max(1, options.resolvedThreads());
     this.pool = threads > 1
