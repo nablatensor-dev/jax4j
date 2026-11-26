@@ -39,6 +39,18 @@ us how each error affects the loss: take a small step in the opposite direction
 to bring it down. Same Java expression, automatic derivatives. Runs on CPU with
 just `jax4j-core`; no GPU required.
 
+In a build from this checkout, use `PrimitiveArrays` to initialize primitive arrays
+with varargs. `floats` accepts decimal literals and rounds them to `float`.
+
+```java
+import static com.nablatensor.jax4j.util.PrimitiveArrays.floats;
+import com.nablatensor.jax4j.tensor.Tensors;
+
+try (var values = Tensors.array(floats(1.23, 4.56))) {
+    System.out.println(values);
+}
+```
+
 For JIT compilation, batching and more, see the
 [transformation guide](docs/transforms.md).
 
