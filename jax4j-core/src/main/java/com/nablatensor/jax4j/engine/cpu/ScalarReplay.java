@@ -52,7 +52,7 @@ final class ScalarReplay extends AbstractAadExecutable {
   private final int streams;
 
   ScalarReplay(AadTape tape, AadOptions options) {
-    super(tape, options);
+    super(tape, options, false);
     this.threads = Math.max(1, options.resolvedThreads());
     this.pool = threads > 1
         ? Executors.newFixedThreadPool(threads, runnable -> {

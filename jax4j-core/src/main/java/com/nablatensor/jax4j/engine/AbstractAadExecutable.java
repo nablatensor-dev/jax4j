@@ -39,12 +39,19 @@ public abstract class AbstractAadExecutable implements AadExecutable {
   protected final AadOptions options;
   protected final double[] inputs;
 
+  private final boolean probeBeforeFirstReplay;
   private double pathsPerSecond;
   private double maxChunkSeconds;
   private boolean closed;
 
   protected AbstractAadExecutable(AadTape tape, AadOptions options) {
+    this(tape, options, true);
+  }
+
+  /** CPU engines can measure throughput while replaying the requested paths. */
+  protected AbstractAadExecutable(AadTape tape, AadOptions options, boolean probeBeforeFirstReplay) {
     this.tape = tape;
+    this.probeBeforeFirstReplay = probeBeforeFirstReplay;
     this.options = options;
     this.inputs = tape.recordedInputs();
     this.maxChunkSeconds = defaultMaxChunkSeconds();
@@ -99,7 +106,12 @@ public abstract class AbstractAadExecutable implements AadExecutable {
       throw new IllegalArgumentException("paths must be positive");
     }
     if (pathsPerSecond <= 0.0) {
-      calibrate(seed);
+      if (probeBeforeFirstReplay) {
+        calibrate(seed);
+      } else if (totalPaths <= MIN_CHUNK_PATHS) {
+        // Avoid using a tiny request to size subsequent, larger dispatches.
+        return replay(totalPaths, 0L, seed);
+      }
     }
     AadResultAccumulator acc = null;
     long done = 0;
@@ -149,7 +161,7 @@ public abstract class AbstractAadExecutable implements AadExecutable {
 
   private long budgetedChunk() {
     if (pathsPerSecond <= 0.0) {
-      return PROBE_PATHS;
+      return probeBeforeFirstReplay ? PROBE_PATHS : MIN_CHUNK_PATHS;
     }
     return Math.max(MIN_CHUNK_PATHS, (long) (pathsPerSecond * maxChunkSeconds));
   }
