@@ -46,6 +46,14 @@ class RandomStreamsTest {
     }
   }
 
+  private static double singleDispatchMean(String engine, java.util.function.Consumer<AadRecorder> body) {
+    // Identical dispatch boundaries keep the accumulation order equal across engines.
+    AadOptions options = new AadOptions(AadOptions.Precision.FLOAT64, false, 1);
+    try (var executable = AadEngines.require(engine, options).compile(AadRecorder.record(body), options)) {
+      return executable.replay(N, 0L, SEED).value();
+    }
+  }
+
   @Test
   void uniformDrawHasTheRightMeanAndRange() {
     // mean of one U(0,1) draw
@@ -79,8 +87,8 @@ class RandomStreamsTest {
       }
       rec.output(acc);
     };
-    double cpu = meanOnEngine("cpu", body);
-    double jit = meanOnEngine("cpu-jit", body);
+    double cpu = singleDispatchMean("cpu", body);
+    double jit = singleDispatchMean("cpu-jit", body);
     assertEquals(cpu, jit, 0.0, "cpu oracle and cpu-jit kernel agree bit-for-bit on randu + named streams");
   }
 
@@ -129,8 +137,9 @@ class RandomStreamsTest {
       }
       rec.output(s);
     };
-    assertEquals(meanOnEngine("cpu", body), meanOnEngine("cpu-jit", body), 0.0,
+    double cpu = singleDispatchMean("cpu", body);
+    assertEquals(cpu, singleDispatchMean("cpu-jit", body), 0.0,
         "a plain single-stream normal tape is still bit-identical across cpu and cpu-jit");
-    assertNotEquals(0.0, meanOnEngine("cpu", body));
+    assertNotEquals(0.0, cpu);
   }
 }

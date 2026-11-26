@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.nablatensor</groupId>
     <artifactId>jax4j</artifactId>
-    <version>0.2.2</version>
+    <version>0.2.3</version>
   </parent>
   <artifactId>jax4j-engine-cuda</artifactId>
   <name>jax4j-engine-cuda</name>
